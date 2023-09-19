@@ -1,0 +1,35 @@
+#:schema https://json.schemastore.org/cargo.json
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+edition = { workspace = true }
+publish = { workspace = true }
+version = { workspace = true }
+name = "polished-css"
+description = "Craft polished CSS in Rust following CSSWG standards. Achieve type-safety, modularity, atomicity, and ergonomic styling for front-end applications."
+categories = ["graphics", "gui", "rendering", "wasm", "web-programming"]
+keywords = ["styling", "styles", "css", "atomic", "properties"]
+authors = [
+	"Mateusz Kadlubowski <xeho91@pm.me>",
+	"Vincent Chapuis <vincent.professional@chapuis.ovh>",
+]
+documentation = { workspace = true }
+homepage = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+readme = { workspace = true }
+
+[features]
+atomic = ["dep:once_cell"]
+yew = ["dep:yew"]
+
+[dependencies]
+polished-css-macros = { path = "../polished-css-macros", version = "0.1.0" }
+
+once_cell = { version = "1.18.0", optional = true }
+paste = { version = "1.0.14" }
+regex = { version = "1.10.0" }
+strum = { workspace = true }
+strum_macros = { workspace = true }
+typed-builder = { version = "0.16.2" }
+yew = { version = "0.21.0", optional = true }

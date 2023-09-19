@@ -1,0 +1,32 @@
+#:schema https://json.schemastore.org/cargo.json
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+edition = { workspace = true }
+publish = { workspace = true }
+version = { workspace = true }
+name = "polished-css-macros"
+description = "Procedural macros which support the development of a library crate `polished-css`."
+categories = ["graphics", "gui", "rendering", "wasm", "web-programming"]
+keywords = ["macros"]
+authors = [
+  "Mateusz Kadlubowski <xeho91@pm.me>",
+  "Vincent Chapuis <vincent.professional@chapuis.ovh>",
+]
+documentation = { workspace = true }
+homepage = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+readme = { workspace = true }
+
+[dependencies]
+convert_case = { version = "0.6.0" }
+darling = { version = "0.20.3" }
+proc-macro2 = { version = "1.0.69" }
+quote = { version = "1.0.33" }
+strum = { workspace = true }
+strum_macros = { workspace = true }
+syn = { version = "2.0.38" }
+
+[lib]
+proc-macro = true

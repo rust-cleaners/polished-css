@@ -27,6 +27,26 @@ description = "Attempt to auto-fix Clippy issues"
 command = "cargo"
 args = ["clippy", "--all-targets", "--no-deps", "--fix"]
 
+# https://github.com/rust-lang/rustfmt
+[tasks.pre-format]
+category = "hooks"
+description = "Run tasks before the `format`"
+install_crate = { rustup_component_name = "rustfmt" }
+command = "cargo"
+args = ["fmt", "--version"]
+[tasks.format]
+category = "lint"
+description = "Check format of the Rust code with `rustfmt`"
+command = "cargo"
+args = ["fmt", "--check"]
+dependencies = ["pre-format"]
+[tasks.format-fix]
+category = "lint"
+description = "Attempt to auto-fix format rustmft issues"
+command = "cargo"
+args = ["fmt", "--verbose"]
+dependencies = ["pre-format"]
+
 # https://github.com/crate-ci/typos
 [tasks.pre-typos]
 workspace = false

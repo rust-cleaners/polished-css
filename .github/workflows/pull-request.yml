@@ -30,17 +30,18 @@ jobs:
               with:
                   header: pr-title-lint-error
                   message: |
-                      Hi there 👋,
-
-                      ![Keanu Reeve thumbs up](https://media.giphy.com/media/TJrS7r0f6SOthGTiPe/giphy.gif)
+                      Hi there @{{ github.actor }} 👋,
 
                       and **THANK YOU** from the bottom of our hearts for opening this Pull Request! ❤️
+
+                      ![Keanu Reeve thumbs up](https://media.giphy.com/media/TJrS7r0f6SOthGTiPe/giphy.gif)
 
                       ----
 
                       In this repository project **we adopted [Conventional Commits specification](https://www.conventionalcommits.org/en/)** to ensure consistency in Git logs.
 
-                      For this reason, **we expect every Pull Request titles _(to the important branches)_ to be semantic**, and looks like the proposed title needs to be adjusted.
+                      For this reason, **we expect every Pull Request titles _(to the important branches)_ to be semantic**, and looks like the proposed title needs to be adjusted.\
+                      We're using the "Squash and merge" strategy, so what matters the most to us is the title.
 
                       Please don't feel discouraged, and take a look at the error message below to see the details of error message.
 

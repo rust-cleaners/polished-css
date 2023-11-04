@@ -13,7 +13,7 @@ permissions:
     pull-requests: write
 
 jobs:
-    pr-title:
+    pr_title:
         name: Validate the Pull Request title
         runs-on: ubuntu-latest
         timeout-minutes: 1
@@ -25,13 +25,20 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Output the previous step status
+              run: |
+                  STATUS=${{ steps.lint_pr_title.outputs.status }}
+                  ERROR_MESSAGE=${{ steps.lint_pr_title.outputs.error_message }}
+                  echo "::set-output name=status::$STATUS"
+                  echo "::set-output name=error_message::$ERROR_MESSAGE"
+
     error-comment:
         uses: ./.github/workflows/error-comment.yml
         needs: [pr-title]
         if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
-            step_status: ${{ steps.lint_pr_title.outputs.status }}
-            header: pr-title-lint-error
+            step_status: ${{ needs.pr_title.outputs.status }}
+            header: lint-pr-title-error
             message: |
                 **Hi there @${{ github.event.pull_request.user.login }}** 👋,
 
@@ -53,7 +60,7 @@ jobs:
                   <summary>Error message details</summary>
 
                   ```
-                  ${{ steps.lint_pr_title.outputs.error_message }}
+                  ${{ needs.pr_title.outputs.error_message }}
                   ```
 
                 </details>

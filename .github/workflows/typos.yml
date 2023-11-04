@@ -31,12 +31,17 @@ jobs:
               uses: crate-ci/typos@v1.16.22
               id: lint_typos
 
+            - name: Output the previous step status
+              run: |
+                  STATUS=${{ steps.lint_typos.outputs.status }}
+                  echo "::set-output name=status::$STATUS"
+
     error-comment:
         uses: ./.github/workflows/error-comment.yml
         needs: [typos]
         if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
-            step_status: ${{ steps.lint_typos.outputs.status }}
+            step_status: ${{ needs.typos.outputs.status }}
             header: lint-typos-error
             message: |
                 ## ❌ **typos**

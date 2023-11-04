@@ -35,13 +35,6 @@ jobs:
               id: success
               if: success()
 
-            - run: echo "status=failure" >> $GITHUB_OUTPUT
-              id: failure
-              if: failure()
-            - run: echo "status=success" >> $GITHUB_OUTPUT
-              id: success
-              if: success()
-
     error-comment:
         uses: ./.github/workflows/error-comment.yml
         needs: [pr_title]

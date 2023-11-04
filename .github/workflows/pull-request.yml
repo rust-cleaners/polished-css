@@ -26,6 +26,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Output the previous step status
+              if: always()
               run: |
                   STATUS=${{ steps.lint_pr_title.outputs.status }}
                   ERROR_MESSAGE=${{ steps.lint_pr_title.outputs.error_message }}

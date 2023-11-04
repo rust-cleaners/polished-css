@@ -32,6 +32,7 @@ jobs:
               id: lint_typos
 
             - name: Output the previous step status
+              if: always()
               run: |
                   STATUS=${{ steps.lint_typos.outputs.status }}
                   echo "::set-output name=status::$STATUS"

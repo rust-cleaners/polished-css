@@ -28,7 +28,7 @@ pub trait FlexStorage: From<FlexDataType> + FrameStorage {
 	}
 
 	// TODO: Add bounds - frame cannot be zero
-	// TODO: Add converion methods?
+	// TODO: Add conversion methods?
 }
 
 #[cfg(test)]

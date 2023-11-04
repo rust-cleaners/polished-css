@@ -10,18 +10,21 @@ load_cargo_aliases = true
 
 # https://github.com/crate-ci/typos
 [tasks.pre-typos]
+workspace = false
 category = "hooks"
 description = "Run tasks before the `typos`"
 install_crate = "typos-cli"
 command = "typos"
 args = ["--version"]
 [tasks.typos]
+workspace = false
 category = "lint"
 description = "Find typos in the code"
 command = "typos"
 args = ["--verbose"]
 dependencies = ["pre-typos"]
 [tasks.typos-fix]
+workspace = false
 category = "fix"
 description = "Attempt to auto-fix typos issues"
 extend = "typos"

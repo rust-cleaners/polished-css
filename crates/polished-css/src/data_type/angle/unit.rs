@@ -2,8 +2,8 @@
 
 crate::create_unit!(Deg, "deg", f64, Degree);
 
-crate::create_unit!(Rad, "rad", f64, Radiant);
-crate::create_unit!(Grad, "grad", f64, Gradiant);
+crate::create_unit!(Rad, "rad", f64, Radian);
+crate::create_unit!(Grad, "grad", f64, Gradian);
 
 crate::create_unit!(Turn, "turn", f64, Turn);
 

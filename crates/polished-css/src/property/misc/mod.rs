@@ -70,7 +70,7 @@ mod test {
 	}
 
 	#[test]
-	fn visibilty() {
+	fn visibility() {
 		let name = "visibility";
 		crate::test_property_initial_value!(Visibility, Visible);
 		crate::test_global_keywords!(Visibility, name);

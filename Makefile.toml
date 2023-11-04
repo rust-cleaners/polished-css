@@ -1,0 +1,28 @@
+#:schema https://json.schemastore.org/cargo-make.json
+# Documentation: https://github.com/sagiegurari/cargo-make
+
+[env]
+CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+RUST_BACKTRACE = "1"
+
+[config]
+load_cargo_aliases = true
+
+# https://github.com/crate-ci/typos
+[tasks.pre-typos]
+category = "hooks"
+description = "Run tasks before the `typos`"
+install_crate = "typos-cli"
+command = "typos"
+args = ["--version"]
+[tasks.typos]
+category = "lint"
+description = "Find typos in the code"
+command = "typos"
+args = ["--verbose"]
+dependencies = ["pre-typos"]
+[tasks.typos-fix]
+category = "fix"
+description = "Attempt to auto-fix typos issues"
+extend = "typos"
+args = ["--verbose", "--write-changes"]

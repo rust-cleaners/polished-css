@@ -31,9 +31,10 @@ jobs:
               uses: crate-ci/typos@v1.16.22
               id: lint_typos
 
-            - name: Output the previous step status
-              if: always()
-              run: echo "name=status::${{ steps.lint_typos.outputs.status }}"
+            - run: echo "name=status::failure"
+              if: failure()
+            - run: echo "name=status::success"
+              if: success()
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml

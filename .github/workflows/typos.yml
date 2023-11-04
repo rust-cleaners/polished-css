@@ -1,19 +1,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 ---
-name: Clippy
+name: Typos
 
 on:
     workflow_call:
-        inputs:
-            flags:
-                description: Clippy command flags to pass after `cargo clippy`
-                default: --all-targets --no-deps --all-features
-                required: false
-                type: string
-            toolchain:
-                description: Rust toolchain to use
-                required: true
-                type: string
     workflow_dispatch:
 
 defaults:
@@ -28,44 +18,29 @@ permissions:
     pull-requests: write
 
 jobs:
-    lint_clippy:
-        name: Clippy
+    typos:
+        name: typos
         runs-on: ubuntu-latest
-        timeout-minutes: 3
         steps:
             - name: Checkout to the repository
               # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
-            - name: Setup Rust
-              # https://github.com/dtolnay/rust-toolchain
-              uses: dtolnay/rust-toolchain@v1
-              with:
-                  components: clippy
-                  toolchain: ${{ inputs.toolchain }}
-
-            - name: Setup the cache
-              # https://github.com/Swatinem/rust-cache
-              uses: Swatinem/rust-cache@v2
-
-            - name: Check Rust codebase with Clippy
-              # https://github.com/giraffate/clippy-action
-              uses: giraffate/clippy-action@v1
-              id: lint_clippy
-              with:
-                  clippy_flags: ${{ inputs.flags }}
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Spell check with `typos`
+              # https://github.com/crate-ci/typos
+              uses: crate-ci/typos@v1.16.22
+              id: lint_typos
 
             - name: Create error comment
-              if: always() && (steps.lint_clippy.outputs.error_message != null)
+              if: always() && (steps.lint_typos.outputs.error_message != null)
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:
-                  header: lint-clippy-error
+                  header: lint-typos-error
                   message: |
-                      ## ❌ **Clippy**
+                      ## ❌ **typos**
 
-                      **There are some issues found in the Rust codebase!**
+                      **There are some spell check issues _(typos)_ found in the Rust codebase!**
 
                       You can preview the annotations in [Files changed] tab, or you can see the details below.
 
@@ -75,7 +50,7 @@ jobs:
                         <summary>Error messages details</summary>
 
                         ```
-                        ${{ steps.lint_clippy.outputs.error_message }}
+                        ${{ steps.lint_typos.outputs.error_message }}
                         ```
 
                       </details>
@@ -87,7 +62,7 @@ jobs:
 
             - name: Delete the error comment
               # Delete a previous comment when the issue has been resolved
-              if: ${{ steps.lint_clippy.outputs.error_message == null }}
+              if: ${{ steps.lint_typos.outputs.error_message == null }}
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:

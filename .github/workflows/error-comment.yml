@@ -20,7 +20,8 @@ on:
 
 env:
     CI: true
-    STEP_STATUS: ${{ fromJSON(steps[inputs.step_id][outputs][status]) }}
+    STEP: steps.${{ inputs.step_id }}.outputs.status
+    STEP_STATUS: ${{ fromJSON(env.STEP) }}
 
 permissions:
     pull-requests: write

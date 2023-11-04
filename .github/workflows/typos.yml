@@ -20,6 +20,8 @@ permissions:
 jobs:
     typos:
         name: typos
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
         steps:
             - name: Checkout to the repository
@@ -31,15 +33,17 @@ jobs:
               uses: crate-ci/typos@v1.16.22
               id: lint_typos
 
-            - run: echo "name=status::failure"
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
               if: failure()
-            - run: echo "name=status::success"
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
               if: success()
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml
         needs: [typos]
-        if: ${{ always() && contains(needs.*.result, 'failure') }}
+        if: always()
         with:
             step_status: ${{ needs.typos.outputs.status }}
             header: lint-typos-error

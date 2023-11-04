@@ -1,4 +1,4 @@
-//! Specififies the look and feel of a targetted UI element(s).
+//! Specififies the look and feel of a targeted UI element(s).
 
 use crate::{
 	property::Property,

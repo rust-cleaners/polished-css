@@ -104,11 +104,11 @@ mod test {
 		);
 		assert_eq!(
 			Rotate::rad(100.0),
-			Rotate(RotateValue::Angle(Angle::Radiant(Rad(100.0)))),
+			Rotate(RotateValue::Angle(Angle::Radian(Rad(100.0)))),
 		);
 		assert_eq!(
 			Rotate::grad(120.0),
-			Rotate(RotateValue::Angle(Angle::Gradiant(Grad(120.0)))),
+			Rotate(RotateValue::Angle(Angle::Gradian(Grad(120.0)))),
 		);
 		assert_eq!(
 			Rotate::turn(3.0),
@@ -171,7 +171,7 @@ mod test {
 	// }
 
 	// #[test]
-	// fn property_with_data_type_dimention() {
+	// fn property_with_data_type_dimension() {
 	//     // TODO: Add some test when property based on this data type is created
 	// }
 

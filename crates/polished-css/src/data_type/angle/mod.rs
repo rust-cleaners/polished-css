@@ -14,8 +14,8 @@ pub use unit::*;
 #[display(on_enum = true)]
 pub enum Angle {
 	Degree(Deg),
-	Radiant(Rad),
-	Gradiant(Grad),
+	Radian(Rad),
+	Gradian(Grad),
 	Turn(Turn),
 }
 

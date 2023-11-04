@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: CI
+# NOTE: CI -> Continuous Integration
+
+on:
+    pull_request:
+        branches: [main]
+        types: [opened, reopened, ready_for_review, synchronize]
+    push:
+        branches: [main]
+    workflow_dispatch:
+        inputs:
+            reason:
+                description: Reason of re-running this workflow
+                required: false
+                type: string
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+    cancel-in-progress: true
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+
+jobs:
+    lint-typos:
+        name: Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout to the repository
+              uses: actions/checkout@v4
+
+            - name: Spell check with `typos`
+              # https://github.com/crate-ci/typos
+              uses: crate-ci/typos@v1.16.22

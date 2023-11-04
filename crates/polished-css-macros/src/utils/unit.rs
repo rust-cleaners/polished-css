@@ -88,8 +88,8 @@ impl Unit {
 		match self {
 			// Angle
 			Self::Deg => "Degree",
-			Self::Rad => "Radiant",
-			Self::Grad => "Gradiant",
+			Self::Rad => "Radian",
+			Self::Grad => "Gradian",
 			Self::Turn => "Turn",
 			// Absolute length
 			Self::Cm => "Centimeter",

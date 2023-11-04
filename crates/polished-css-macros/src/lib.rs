@@ -17,7 +17,7 @@ use syn::{parse_macro_input, DeriveInput, ItemImpl};
 ///
 /// ### Usage
 ///
-/// It attemps to follow the [CSSWG specification defaulting](https://www.w3.org/TR/css-cascade-5/#defaulting).\
+/// It attempts to follow the [CSSWG specification defaulting](https://www.w3.org/TR/css-cascade-5/#defaulting).\
 /// However due to possible differences between browsers, the [initial values
 /// provided by MDN is used on this crate](https://developer.mozilla.org/en-US/docs/Web/CSS/initial_value).
 #[proc_macro_derive(Default, attributes(default))]
@@ -131,7 +131,7 @@ pub fn property_name(input: TokenStream) -> TokenStream {
 ///
 /// ### Purpose
 ///
-/// Creates an enum with allowed data types and keywords for targetted property.
+/// Creates an enum with allowed data types and keywords for targeted property.
 #[proc_macro_derive(PropertyValue, attributes(property))]
 pub fn property_value(input: TokenStream) -> TokenStream {
 	let ast = parse_macro_input!(input as DeriveInput);
@@ -179,8 +179,8 @@ pub fn property_from_data_type(input: TokenStream) -> TokenStream {
 ///
 /// ### Purpose
 ///
-/// Quickly generates a trait with bounds and the "contstructor" method, to use
-/// on any data type that relies on this targetted unit.
+/// Quickly generates a trait with bounds and the "constructor" method, to use
+/// on any data type that relies on this targeted unit.
 #[proc_macro_derive(UnitTrait, attributes(unit))]
 pub fn create_unit_trait(input: TokenStream) -> TokenStream {
 	let ast = parse_macro_input!(input as DeriveInput);
@@ -246,7 +246,7 @@ pub fn data_type_from_data_types(input: TokenStream) -> TokenStream {
 /// ### Purpose
 ///
 /// Based on **enum with field variants only**, creates a trait `<name>Storage`
-/// with methods for each variant to construct self with targetted variant.
+/// with methods for each variant to construct self with targeted variant.
 #[proc_macro_derive(TraitFromEnum, attributes(data_type))]
 pub fn trait_from_enum(input: TokenStream) -> TokenStream {
 	let ast = parse_macro_input!(input as DeriveInput);
@@ -264,7 +264,7 @@ pub fn trait_from_enum(input: TokenStream) -> TokenStream {
 /// Based on the provided data type `impl`:
 ///
 /// - creates a **constructor** method, for the data types _(if is combined)_,
-/// - implement methods from the targetted data types for the ergonomic usage
+/// - implement methods from the targeted data types for the ergonomic usage
 ///   with properties
 #[proc_macro_attribute]
 pub fn create_trait_from_enum_impl(args: TokenStream, input: TokenStream) -> TokenStream {

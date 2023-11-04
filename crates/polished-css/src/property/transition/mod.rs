@@ -42,7 +42,7 @@ crate::create_property!(
 #[cfg(test)]
 mod test {
 	#[test]
-	fn transitiong_delay() {
+	fn transitioning_delay() {
 		let name = "transition-delay";
 		crate::test_property_initial_value!(TransitionDelay, Initial);
 		crate::test_global_keywords!(TransitionDelay, name);
@@ -52,7 +52,7 @@ mod test {
 	}
 
 	#[test]
-	fn transitiong_duration() {
+	fn transitioning_duration() {
 		let name = "transition-duration";
 		crate::test_property_initial_value!(TransitionDuration, Initial);
 		crate::test_global_keywords!(TransitionDuration, name);

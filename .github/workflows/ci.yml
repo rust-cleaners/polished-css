@@ -28,6 +28,9 @@ env:
     CI: true
     CARGO_TERM_COLOR: always
 
+permissions:
+    pull-requests: write
+
 jobs:
     lint-clippy:
         name: Lint

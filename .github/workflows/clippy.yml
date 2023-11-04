@@ -28,7 +28,7 @@ permissions:
 
 jobs:
     lint_clippy:
-        name: Lint
+        name: Clippy
         runs-on: ubuntu-latest
         timeout-minutes: 3
         steps:
@@ -47,7 +47,7 @@ jobs:
               # https://github.com/Swatinem/rust-cache
               uses: Swatinem/rust-cache@v2
 
-            - name: Lint Rust codebase with Clippy
+            - name: Check Rust codebase with Clippy
               # https://github.com/actions-rs/clippy-check
               uses: actions-rs/clippy-check@v1
               id: lint_clippy
@@ -69,7 +69,7 @@ jobs:
 
                       You can preview the annotations in [Files changed] tab, or you can see the details below.
 
-                      [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ }}/files
+                      [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files
 
                       <details>
                         <summary>Error messages details</summary>

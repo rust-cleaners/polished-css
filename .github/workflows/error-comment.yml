@@ -30,14 +30,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Create error comment
-              if: steps.${{ inputs.step_id }}.outputs.status == "failure" || steps.${{ inputs.step_id }}.outputs.status == "failure"
+              if: steps.${{ inputs.step_id }}.outputs.status == "failure"
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:
                   header: ${{ inputs.header }}
                   message: |
                       ${{ inputs.message }}
-
                       ---
 
                       > **Note**
@@ -45,7 +44,7 @@ jobs:
 
             - name: Delete error comment
               # Delete a previous comment when the issue has been resolved
-              if: steps.${{ inputs.step_id }}.outputs.status == "success" || steps.${{ inputs.step_id }}.outputs.status == "success"
+              if: steps.${{ inputs.step_id }}.outputs.status == "success"
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:

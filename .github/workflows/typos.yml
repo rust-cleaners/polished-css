@@ -31,6 +31,11 @@ jobs:
               uses: crate-ci/typos@v1.16.22
               id: lint_typos
 
+            - name: Test prev output
+              if: always()
+              run: |
+                  echo "prev job output: ${{ steps.lint_typos.outputs.error_message }}"
+
             - name: Create error comment
               if: always() && (steps.lint_typos.outputs.error_message != null)
               # https://github.com/marocchino/sticky-pull-request-comment

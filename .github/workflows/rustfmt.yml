@@ -58,7 +58,6 @@ jobs:
               id: lint_rustfmt
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  args: --all --verbose
                   toolchain: ${{ inputs.toolchain }}
                   working-directory: ${{ inputs.working-directory }}
 

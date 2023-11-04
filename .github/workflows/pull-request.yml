@@ -26,7 +26,7 @@ jobs:
             - name: Create error comment
               # When the previous steps fails, the workflow would stop. By adding this
               # condition you can continue the execution with the populated error message.
-              if: always() && (steps.lint_pr_title.outputs.error_message != null)
+              if: always() && (steps.pr_title.outputs.error_message != null)
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:

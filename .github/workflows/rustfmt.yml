@@ -42,7 +42,7 @@ jobs:
 
             - name: Check Rust codebase format with rustfmt
               # https://github.com/mbrobbel/rustfmt-check
-              uses: mbrobbel/rustfmt-check@v1
+              uses: mbrobbel/rustfmt-check@0.8.0
               id: lint_rustfmt
               with:
                   mode: review

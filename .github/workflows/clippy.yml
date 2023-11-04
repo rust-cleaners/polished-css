@@ -4,7 +4,6 @@ name: Clippy
 
 on:
     workflow_call:
-    workflow_dispatch:
         inputs:
             args:
                 description: Clippy command args to pass
@@ -15,6 +14,7 @@ on:
                 description: Rust toolchain to use
                 required: true
                 type: string
+    workflow_dispatch:
 
 defaults:
     run:

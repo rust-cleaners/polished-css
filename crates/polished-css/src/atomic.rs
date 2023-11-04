@@ -1,4 +1,3 @@
-//! Kurwa mac!
 use std::{collections::HashMap, sync::RwLock};
 
 use once_cell::sync::Lazy;

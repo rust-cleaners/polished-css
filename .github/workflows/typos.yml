@@ -32,9 +32,9 @@ jobs:
               id: lint_typos
 
     error-comment:
-        name: Error comment
         uses: ./.github/workflows/error-comment.yml
         needs: [typos]
+        if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
             step_id: lint_typos
             header: lint-typos-error

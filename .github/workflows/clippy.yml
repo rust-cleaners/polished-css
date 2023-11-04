@@ -57,9 +57,9 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
 
     error-comment:
-        name: Error comment
         uses: ./.github/workflows/error-comment.yml
         needs: [clippy]
+        if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
             step_id: lint_clippy
             header: lint-clippy-error

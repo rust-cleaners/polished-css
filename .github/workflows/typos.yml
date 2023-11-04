@@ -36,7 +36,7 @@ jobs:
         needs: [typos]
         if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
-            step_id: lint_typos
+            step_status: ${{ steps.lint_typos.outputs.status }}
             header: lint-typos-error
             message: |
                 ## ❌ **typos**

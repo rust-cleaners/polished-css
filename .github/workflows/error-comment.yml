@@ -13,14 +13,13 @@ on:
                 description: Content of the comment
                 required: true
                 type: string
-            step_id:
-                description: Id of the step which failed
+            step_status:
+                description: Status of the step which failed
                 required: true
                 type: string
 
 env:
     CI: true
-    STEP_STATUS: ${{ join(steps.*.outputs.status, inputs.step_id) }}
 
 permissions:
     pull-requests: write
@@ -35,7 +34,7 @@ jobs:
                   echo ${{ env.STEP_STATUS }}
 
             - name: Create error comment
-              if: ${{ env.STEP_STATUS == 'failure' }}
+              if: ${{ inputs.step_status == 'failure' }}
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:
@@ -49,7 +48,7 @@ jobs:
 
             - name: Delete error comment
               # Delete a previous comment when the issue has been resolved
-              if: ${{ env.STEP_STATUS == 'success' }}
+              if: ${{ inputs.step_status == 'success' }}
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:

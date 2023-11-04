@@ -61,7 +61,7 @@ jobs:
         needs: [clippy]
         if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
-            step_id: lint_clippy
+            step_status: ${{ steps.lint_clippy.outputs.status }}
             header: lint-clippy-error
             message: |
                 ## ❌ **Clippy**

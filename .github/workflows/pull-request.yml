@@ -30,7 +30,7 @@ jobs:
         needs: [pr-title]
         if: ${{ always() && contains(needs.*.result, 'failure') }}
         with:
-            step_id: lint_typos
+            step_status: ${{ steps.lint_pr_title.outputs.status }}
             header: pr-title-lint-error
             message: |
                 **Hi there @${{ github.event.pull_request.user.login }}** 👋,

@@ -4,6 +4,23 @@ name: rustfmt
 
 on:
     workflow_call:
+        inputs:
+            flags:
+                description: Args (flags) to pass after `cargo fmt` command
+                type: string
+                required: false
+                default: --check --verbose
+            toolchain:
+                description: Rust toolchain to use
+                type: string
+                required: false
+                default: nightly
+            working-directory:
+                description: working directory where to execute `cargo fmt`
+                type: string
+                required: false
+                default: .
+
     workflow_dispatch:
 
 defaults:
@@ -41,9 +58,42 @@ jobs:
               uses: Swatinem/rust-cache@v2
 
             - name: Check Rust codebase format with rustfmt
-              # https://github.com/mbrobbel/rustfmt-check
-              uses: mbrobbel/rustfmt-check@0.8.0
+              # https://github.com/LoliGothick/rustfmt-check
+              uses: LoliGothick/rustfmt-check@0.4.1
               id: lint_rustfmt
               with:
-                  mode: review
                   token: ${{ secrets.GITHUB_TOKEN }}
+                  args: ${{ inputs.flags }}
+                  toolchain: ${{ inputs.toolchain }}
+                  working-directory: ${{ inputs.working-directory }}
+
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
+
+    error-comment:
+        uses: ./.github/workflows/error-comment.yml
+        needs: [rustfmt]
+        if: always()
+        with:
+            step_status: ${{ needs.rustfmt.outputs.status }}
+            header: lint-rustfmt-error
+            message: |
+                ## ❌ **rustfmt**
+
+                **There are some format/styling issues found in the Rust codebase!**
+
+                You can preview the annotations in [Files changed] tab.
+
+                [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files
+
+                ---
+
+                You can quickly fix the issues with the command _(via `cargo-make` task)_:
+
+                ```sh
+                makers format-fix
+                ```

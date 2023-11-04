@@ -9,7 +9,7 @@ on:
                 description: Args (flags) to pass after `cargo fmt` command
                 type: string
                 required: false
-                default: --all --check --verbose
+                default: --all --verbose
             toolchain:
                 description: Rust toolchain to use
                 type: string

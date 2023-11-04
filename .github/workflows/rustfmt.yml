@@ -5,6 +5,11 @@ name: rustfmt
 on:
     workflow_call:
         inputs:
+            flags:
+                description: Args (flags) to pass after `cargo fmt` command
+                type: string
+                required: false
+                default: --all --check --verbose
             toolchain:
                 description: Rust toolchain to use
                 type: string
@@ -58,6 +63,7 @@ jobs:
               id: lint_rustfmt
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
+                  flags: ${{ inputs.flags }}
                   toolchain: ${{ inputs.toolchain }}
                   working-directory: ${{ inputs.working-directory }}
 

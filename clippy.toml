@@ -1,0 +1,7 @@
+# https://doc.rust-lang.org/nightly/clippy/configuration.html
+
+msrv = "1.73.0"
+
+cognitive-complexity-threshold = 15
+too-many-arguments-threshold = 5
+too-many-lines-threshold = 80

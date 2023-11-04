@@ -40,7 +40,7 @@ jobs:
                   message: |
                       ## ❌ **typos**
 
-                      **There are some spell check issues _(typos)_ found in the Rust codebase!**
+                      **There are some spell check issues _(typos)_ found!**
 
                       You can preview the annotations in [Files changed] tab.
 

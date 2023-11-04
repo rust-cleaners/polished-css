@@ -59,7 +59,7 @@ jobs:
 
             - name: Check Rust codebase format with rustfmt
               # https://github.com/LoliGothick/rustfmt-check
-              uses: LoliGothick/rustfmt-check@0.4.1
+              uses: LoliGothick/rustfmt-check@v0.4.1
               id: lint_rustfmt
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}

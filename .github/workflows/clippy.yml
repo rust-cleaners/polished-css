@@ -28,7 +28,7 @@ permissions:
     pull-requests: write
 
 jobs:
-    lint_clippy:
+    clippy:
         name: Clippy
         runs-on: ubuntu-latest
         timeout-minutes: 3
@@ -56,40 +56,18 @@ jobs:
                   clippy_flags: ${{ inputs.flags }}
                   github_token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Create error comment
-              if: always() && (steps.lint_clippy.outputs.error_message != null)
-              # https://github.com/marocchino/sticky-pull-request-comment
-              uses: marocchino/sticky-pull-request-comment@v2
-              with:
-                  header: lint-clippy-error
-                  message: |
-                      ## ❌ **Clippy**
+    error-comment:
+        name: Error comment
+        uses: ./.github/workflows/error-comment.yml
+        needs: [clippy]
+        with:
+            step_id: lint_clippy
+            header: lint-clippy-error
+            message: |
+                ## ❌ **Clippy**
 
-                      **There are some issues found in the Rust codebase!**
+                **There are some issues found in the Rust codebase!**
 
-                      You can preview the annotations in [Files changed] tab, or you can see the details below.
+                You can preview the annotations in [Files changed] tab.
 
-                      [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files
-
-                      <details>
-                        <summary>Error messages details</summary>
-
-                        ```
-                        ${{ steps.lint_clippy.outputs.error_message }}
-                        ```
-
-                      </details>
-
-                      ---
-
-                      > **Note:**
-                      > This comment will automatically get deleted once the issue is resolved.
-
-            - name: Delete the error comment
-              # Delete a previous comment when the issue has been resolved
-              if: ${{ steps.lint_clippy.outputs.error_message == null }}
-              # https://github.com/marocchino/sticky-pull-request-comment
-              uses: marocchino/sticky-pull-request-comment@v2
-              with:
-                  header: lint-typos-error
-                  delete: true
+                [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files

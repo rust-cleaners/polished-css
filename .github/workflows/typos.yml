@@ -31,31 +31,18 @@ jobs:
               uses: crate-ci/typos@v1.16.22
               id: lint_typos
 
-            - name: Create error comment
-              if: failure()
-              # https://github.com/marocchino/sticky-pull-request-comment
-              uses: marocchino/sticky-pull-request-comment@v2
-              with:
-                  header: lint-typos-error
-                  message: |
-                      ## ❌ **typos**
+    error-comment:
+        name: Error comment
+        uses: ./.github/workflows/error-comment.yml
+        needs: [typos]
+        with:
+            step_id: lint_typos
+            header: lint-typos-error
+            message: |
+                ## ❌ **typos**
 
-                      **There are some spell check issues _(typos)_ found!**
+                **There are some spell check issues _(typos)_ found!**
 
-                      You can preview the annotations in [Files changed] tab.
+                You can preview the annotations in [Files changed] tab.
 
-                      [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files
-
-                      ---
-
-                      > **Note:**
-                      > This comment will automatically get deleted once the issue is resolved.
-
-            - name: Delete the error comment
-              # Delete a previous comment when the issue has been resolved
-              if: success()
-              # https://github.com/marocchino/sticky-pull-request-comment
-              uses: marocchino/sticky-pull-request-comment@v2
-              with:
-                  header: lint-typos-error
-                  delete: true
+                [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files

@@ -29,8 +29,6 @@
 
 extern crate proc_macro;
 
-use strum::EnumCount;
-
 mod attribute;
 mod derive;
 mod utils;

@@ -4,36 +4,36 @@
 pub struct Number(pub f64);
 
 impl Number {
-    #[must_use]
-    pub fn zero() -> Self {
-        Self(0.0)
-    }
+	#[must_use]
+	pub fn zero() -> Self {
+		Self(0.0)
+	}
 }
 
 pub trait NumberStorage: From<Number> {
-    #[must_use]
-    fn number(value: f64) -> Self
-    where
-        Self: Sized,
-    {
-        Self::from(Number(value))
-    }
+	#[must_use]
+	fn number(value: f64) -> Self
+	where
+		Self: Sized,
+	{
+		Self::from(Number(value))
+	}
 
-    #[must_use]
-    fn zero() -> Self
-    where
-        Self: Sized,
-    {
-        Self::from(Number(0.0))
-    }
+	#[must_use]
+	fn zero() -> Self
+	where
+		Self: Sized,
+	{
+		Self::from(Number(0.0))
+	}
 }
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn display() {
-        assert_eq!(super::Number(13.37).to_string(), String::from("13.37"));
-        assert_eq!(super::Number(-100.0).to_string(), String::from("-100"));
-        assert_eq!(super::Number::zero().to_string(), String::from("0"));
-    }
+	#[test]
+	fn display() {
+		assert_eq!(super::Number(13.37).to_string(), String::from("13.37"));
+		assert_eq!(super::Number(-100.0).to_string(), String::from("-100"));
+		assert_eq!(super::Number::zero().to_string(), String::from("0"));
+	}
 }

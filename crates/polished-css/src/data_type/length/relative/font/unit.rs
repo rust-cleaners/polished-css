@@ -20,24 +20,24 @@ crate::create_unit!(Rlh, "rlh", f64, RelativeLineHeight);
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn display() {
-        assert_eq!(super::Em(1.0).to_string(), String::from("1em"));
-        assert_eq!(super::Rem(1.0).to_string(), String::from("1rem"));
+	#[test]
+	fn display() {
+		assert_eq!(super::Em(1.0).to_string(), String::from("1em"));
+		assert_eq!(super::Rem(1.0).to_string(), String::from("1rem"));
 
-        assert_eq!(super::Ex(1.0).to_string(), String::from("1ex"));
-        assert_eq!(super::Rex(1.0).to_string(), String::from("1rex"));
+		assert_eq!(super::Ex(1.0).to_string(), String::from("1ex"));
+		assert_eq!(super::Rex(1.0).to_string(), String::from("1rex"));
 
-        assert_eq!(super::Cap(1.0).to_string(), String::from("1cap"));
-        assert_eq!(super::Rcap(1.0).to_string(), String::from("1rcap"));
+		assert_eq!(super::Cap(1.0).to_string(), String::from("1cap"));
+		assert_eq!(super::Rcap(1.0).to_string(), String::from("1rcap"));
 
-        assert_eq!(super::Ch(1).to_string(), String::from("1ch"));
-        assert_eq!(super::Rch(1).to_string(), String::from("1rch"));
+		assert_eq!(super::Ch(1).to_string(), String::from("1ch"));
+		assert_eq!(super::Rch(1).to_string(), String::from("1rch"));
 
-        assert_eq!(super::Ic(1).to_string(), String::from("1ic"));
-        assert_eq!(super::Ric(1).to_string(), String::from("1ric"));
+		assert_eq!(super::Ic(1).to_string(), String::from("1ic"));
+		assert_eq!(super::Ric(1).to_string(), String::from("1ric"));
 
-        assert_eq!(super::Lh(1.0).to_string(), String::from("1lh"));
-        assert_eq!(super::Rlh(1.0).to_string(), String::from("1rlh"));
-    }
+		assert_eq!(super::Lh(1.0).to_string(), String::from("1lh"));
+		assert_eq!(super::Rlh(1.0).to_string(), String::from("1rlh"));
+	}
 }

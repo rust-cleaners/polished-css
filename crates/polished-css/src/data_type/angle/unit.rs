@@ -9,13 +9,13 @@ crate::create_unit!(Turn, "turn", f64, Turn);
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn display() {
-        assert_eq!(super::Deg(1.0).to_string(), String::from("1deg"));
+	#[test]
+	fn display() {
+		assert_eq!(super::Deg(1.0).to_string(), String::from("1deg"));
 
-        assert_eq!(super::Rad(1.0).to_string(), String::from("1rad"));
-        assert_eq!(super::Grad(1.0).to_string(), String::from("1grad"));
+		assert_eq!(super::Rad(1.0).to_string(), String::from("1rad"));
+		assert_eq!(super::Grad(1.0).to_string(), String::from("1grad"));
 
-        assert_eq!(super::Turn(1.0).to_string(), String::from("1turn"));
-    }
+		assert_eq!(super::Turn(1.0).to_string(), String::from("1turn"));
+	}
 }

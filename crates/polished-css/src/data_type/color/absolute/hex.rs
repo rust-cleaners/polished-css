@@ -6,11 +6,11 @@
 pub struct HexColor(pub String);
 
 pub trait HexColorStorage: From<HexColor> {
-    #[must_use]
-    fn hex(value: HexColor) -> Self
-    where
-        Self: Sized,
-    {
-        Self::from(value)
-    }
+	#[must_use]
+	fn hex(value: HexColor) -> Self
+	where
+		Self: Sized,
+	{
+		Self::from(value)
+	}
 }

@@ -1,5 +1,4 @@
 //! The styles **prelude** - alleviate imports of many common types.
-//!
 //! ```
 //! use styles::prelude::*;
 //! ```

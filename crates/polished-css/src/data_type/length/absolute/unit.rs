@@ -10,14 +10,14 @@ crate::create_unit!(Px, "px", isize, Pixel);
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn display() {
-        assert_eq!(super::Q(1).to_string(), String::from("1Q"));
-        assert_eq!(super::Mm(1.0).to_string(), String::from("1mm"));
-        assert_eq!(super::Cm(1.0).to_string(), String::from("1cm"));
-        assert_eq!(super::In(1.0).to_string(), String::from("1in"));
-        assert_eq!(super::Pc(1).to_string(), String::from("1pc"));
-        assert_eq!(super::Pt(1).to_string(), String::from("1pt"));
-        assert_eq!(super::Px(1).to_string(), String::from("1px"));
-    }
+	#[test]
+	fn display() {
+		assert_eq!(super::Q(1).to_string(), String::from("1Q"));
+		assert_eq!(super::Mm(1.0).to_string(), String::from("1mm"));
+		assert_eq!(super::Cm(1.0).to_string(), String::from("1cm"));
+		assert_eq!(super::In(1.0).to_string(), String::from("1in"));
+		assert_eq!(super::Pc(1).to_string(), String::from("1pc"));
+		assert_eq!(super::Pt(1).to_string(), String::from("1pt"));
+		assert_eq!(super::Px(1).to_string(), String::from("1px"));
+	}
 }

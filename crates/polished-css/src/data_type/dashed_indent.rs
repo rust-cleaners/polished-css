@@ -5,32 +5,32 @@
 pub struct DashedIdent(pub String);
 
 impl From<&str> for DashedIdent {
-    fn from(value: &str) -> Self {
-        Self(value.to_string())
-    }
+	fn from(value: &str) -> Self {
+		Self(value.to_string())
+	}
 }
 
 pub trait DashedIdentStorage: From<DashedIdent> {
-    #[must_use]
-    fn dashed_ident(value: &str) -> Self
-    where
-        Self: Sized,
-    {
-        Self::from(value.into())
-    }
+	#[must_use]
+	fn dashed_ident(value: &str) -> Self
+	where
+		Self: Sized,
+	{
+		Self::from(value.into())
+	}
 }
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn unit() {
-        assert_eq!(
-            super::DashedIdent::from("example-kebab").to_string(),
-            String::from("--example-kebab")
-        );
-        assert_eq!(
-            super::DashedIdent::from("example_snake").to_string(),
-            String::from("--example_snake")
-        );
-    }
+	#[test]
+	fn unit() {
+		assert_eq!(
+			super::DashedIdent::from("example-kebab").to_string(),
+			String::from("--example-kebab")
+		);
+		assert_eq!(
+			super::DashedIdent::from("example_snake").to_string(),
+			String::from("--example_snake")
+		);
+	}
 }

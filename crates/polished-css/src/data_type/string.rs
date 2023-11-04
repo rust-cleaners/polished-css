@@ -6,32 +6,32 @@
 pub struct DataTypeString(pub String);
 
 impl From<&str> for DataTypeString {
-    fn from(value: &str) -> Self {
-        Self(value.to_string())
-    }
+	fn from(value: &str) -> Self {
+		Self(value.to_string())
+	}
 }
 
 pub trait StringStorage: From<DataTypeString> {
-    #[must_use]
-    fn string(value: &str) -> Self
-    where
-        Self: Sized,
-    {
-        Self::from(value.into())
-    }
+	#[must_use]
+	fn string(value: &str) -> Self
+	where
+		Self: Sized,
+	{
+		Self::from(value.into())
+	}
 }
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn display() {
-        assert_eq!(
-            super::DataTypeString::from("it").to_string(),
-            String::from("it")
-        );
-        assert_eq!(
-            super::DataTypeString(String::from("works")).to_string(),
-            String::from("works")
-        );
-    }
+	#[test]
+	fn display() {
+		assert_eq!(
+			super::DataTypeString::from("it").to_string(),
+			String::from("it")
+		);
+		assert_eq!(
+			super::DataTypeString(String::from("works")).to_string(),
+			String::from("works")
+		);
+	}
 }

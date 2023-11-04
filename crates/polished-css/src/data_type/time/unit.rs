@@ -5,9 +5,9 @@ crate::create_unit!(S, "s", f64, Second);
 
 #[cfg(test)]
 mod test {
-    #[test]
-    fn display() {
-        assert_eq!(super::Ms(1).to_string(), String::from("1ms"));
-        assert_eq!(super::S(1.0).to_string(), String::from("1s"));
-    }
+	#[test]
+	fn display() {
+		assert_eq!(super::Ms(1).to_string(), String::from("1ms"));
+		assert_eq!(super::S(1.0).to_string(), String::from("1s"));
+	}
 }

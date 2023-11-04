@@ -1,19 +1,21 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 ---
-name: Clippy
+name: rustfmt
 
 on:
     workflow_call:
         inputs:
-            flags:
-                description: Clippy command flags to pass after `cargo clippy`
-                default: --all-targets --no-deps
-                required: false
-                type: string
             toolchain:
                 description: Rust toolchain to use
-                required: true
                 type: string
+                required: false
+                default: nightly
+            working-directory:
+                description: working directory where to execute `cargo fmt`
+                type: string
+                required: false
+                default: .
+
     workflow_dispatch:
 
 defaults:
@@ -28,8 +30,8 @@ permissions:
     pull-requests: write
 
 jobs:
-    clippy:
-        name: Clippy
+    rustfmt:
+        name: rustfmt
         outputs:
             status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
@@ -43,20 +45,22 @@ jobs:
               # https://github.com/dtolnay/rust-toolchain
               uses: dtolnay/rust-toolchain@v1
               with:
-                  components: clippy
-                  toolchain: ${{ inputs.toolchain }}
+                  components: rustfmt
+                  toolchain: nightly
 
             - name: Setup the cache
               # https://github.com/Swatinem/rust-cache
               uses: Swatinem/rust-cache@v2
 
-            - name: Check Rust codebase with Clippy
-              # https://github.com/giraffate/clippy-action
-              uses: giraffate/clippy-action@v1
-              id: lint_clippy
+            - name: Check Rust codebase format with rustfmt
+              # https://github.com/LoliGothick/rustfmt-check
+              uses: LoliGothick/rustfmt-check@v0.4.1
+              id: lint_rustfmt
               with:
-                  clippy_flags: ${{ inputs.flags }}
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  flags: --all
+                  toolchain: ${{ inputs.toolchain }}
+                  working-directory: ${{ inputs.working-directory }}
 
             - run: echo "status=failure" >> $GITHUB_OUTPUT
               id: failure
@@ -67,15 +71,15 @@ jobs:
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml
-        needs: [clippy]
+        needs: [rustfmt]
         if: always()
         with:
-            step_status: ${{ needs.clippy.outputs.status }}
-            header: lint-clippy-error
+            step_status: ${{ needs.rustfmt.outputs.status }}
+            header: lint-rustfmt-error
             message: |
-                ## ❌ **Clippy**
+                ## ❌ **rustfmt**
 
-                **There are some issues found in the Rust codebase!**
+                **There are some format/styling issues found in the Rust codebase!**
 
                 You can preview the annotations in [Files changed] tab.
 
@@ -83,8 +87,8 @@ jobs:
 
                 ---
 
-                You can also attempt to fix the issues with the command _(via `cargo-make` task)_:
+                You can quickly fix the issues with the command _(via `cargo-make` task)_:
 
                 ```sh
-                makers clippy-fix
+                makers format-fix
                 ```

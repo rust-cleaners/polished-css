@@ -42,6 +42,10 @@ jobs:
         with:
             toolchain: ${{ matrix.toolchain }}
 
+    lint-rustfmt:
+        name: Lint
+        uses: ./.github/workflows/rustfmt.yml
+
     lint-typos:
         name: Lint
         uses: ./.github/workflows/typos.yml

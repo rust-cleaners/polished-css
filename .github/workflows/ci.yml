@@ -26,13 +26,47 @@ defaults:
 
 env:
     CI: true
+    CARGO_TERM_COLOR: always
 
 jobs:
+    lint-clippy:
+        name: Lint
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                toolchain: [stable, nightly]
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              # https://github.com/actions-rs/toolchain
+              uses: actions-rs/toolchain@v1
+              with:
+                  components: clippy
+                  override: true
+                  profile: minimal
+                  toolchain: ${{ matrix.toolchain }}
+
+            - name: Setup the cache
+              # https://github.com/Swatinem/rust-cache
+              uses: Swatinem/rust-cache@v2
+
+            - name: Lint Rust codebase with Clippy
+              # https://github.com/actions-rs/clippy-check
+              uses: actions-rs/clippy-check@v1
+              with:
+                  args: --all-targets --no-deps --all-features
+                  toolchain: ${{ matrix.toolchain }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
     lint-typos:
         name: Lint
         runs-on: ubuntu-latest
         steps:
             - name: Checkout to the repository
+              # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
             - name: Spell check with `typos`

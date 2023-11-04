@@ -15,6 +15,9 @@ permissions:
 jobs:
     pr_title:
         name: Validate the Pull Request title
+        outputs:
+            error_message: ${{ lint_pr_title.outputs.error_message }}
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
         timeout-minutes: 1
         steps:
@@ -25,18 +28,24 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Output the previous step status
-              if: always()
-              run: |
-                  STATUS=${{ steps.lint_pr_title.outputs.status }}
-                  ERROR_MESSAGE=${{ steps.lint_pr_title.outputs.error_message }}
-                  echo "::set-output name=status::$STATUS"
-                  echo "::set-output name=error_message::$ERROR_MESSAGE"
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
+
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml
-        needs: [pr-title]
-        if: ${{ always() && contains(needs.*.result, 'failure') }}
+        needs: [pr_title]
+        if: always()
         with:
             step_status: ${{ needs.pr_title.outputs.status }}
             header: lint-pr-title-error

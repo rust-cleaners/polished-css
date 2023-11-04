@@ -30,6 +30,8 @@ permissions:
 jobs:
     clippy:
         name: Clippy
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
         timeout-minutes: 3
         steps:
@@ -56,16 +58,17 @@ jobs:
                   clippy_flags: ${{ inputs.flags }}
                   github_token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Output the previous step status
-              if: always()
-              run: |
-                  STATUS=${{ steps.lint_clippy.outputs.status }}
-                  echo "::set-output name=status::$STATUS"
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml
         needs: [clippy]
-        if: ${{ always() && contains(needs.*.result, 'failure') }}
+        if: always()
         with:
             step_status: ${{ needs.clippy.outputs.status }}
             header: lint-clippy-error

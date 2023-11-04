@@ -44,7 +44,7 @@ jobs:
                       ---
 
                       > **Note**
-                      > This comment will automatically get deleted once the issue is resolved.
+                      > This comment will automatically get deleted once the issue(s) are resolved.
 
             - name: Delete error comment
               # Delete a previous comment when the issue has been resolved

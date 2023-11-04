@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Clippy
+
+on:
+    workflow_call:
+        inputs:
+            flags:
+                description: Clippy command flags to pass after `cargo clippy`
+                default: --all-targets --no-deps
+                required: false
+                type: string
+            toolchain:
+                description: Rust toolchain to use
+                required: true
+                type: string
+    workflow_dispatch:
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    pull-requests: write
+
+jobs:
+    clippy:
+        name: Clippy
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 3
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              # https://github.com/dtolnay/rust-toolchain
+              uses: dtolnay/rust-toolchain@v1
+              with:
+                  components: clippy
+                  toolchain: ${{ inputs.toolchain }}
+
+            - name: Setup the cache
+              # https://github.com/Swatinem/rust-cache
+              uses: Swatinem/rust-cache@v2
+
+            - name: Check Rust codebase with Clippy
+              # https://github.com/giraffate/clippy-action
+              uses: giraffate/clippy-action@v1
+              id: lint_clippy
+              with:
+                  clippy_flags: ${{ inputs.flags }}
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
+
+    error-comment:
+        uses: ./.github/workflows/error-comment.yml
+        needs: [clippy]
+        if: always()
+        with:
+            step_status: ${{ needs.clippy.outputs.status }}
+            header: lint-clippy-error
+            message: |
+                ## ❌ **Clippy**
+
+                **There are some issues found in the Rust codebase!**
+
+                You can preview the annotations in [Files changed] tab.
+
+                [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files

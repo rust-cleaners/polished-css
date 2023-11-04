@@ -26,15 +26,22 @@ defaults:
 
 env:
     CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    pull-requests: write
 
 jobs:
+    lint-clippy:
+        name: Lint
+        uses: ./.github/workflows/clippy.yml
+        strategy:
+            fail-fast: false
+            matrix:
+                toolchain: [stable, nightly]
+        with:
+            toolchain: ${{ matrix.toolchain }}
+
     lint-typos:
         name: Lint
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout to the repository
-              uses: actions/checkout@v4
-
-            - name: Spell check with `typos`
-              # https://github.com/crate-ci/typos
-              uses: crate-ci/typos@v1.16.22
+        uses: ./.github/workflows/typos.yml

@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Typos
+
+on:
+    workflow_call:
+    workflow_dispatch:
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    pull-requests: write
+
+jobs:
+    typos:
+        name: typos
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Spell check with `typos`
+              # https://github.com/crate-ci/typos
+              uses: crate-ci/typos@v1.16.22
+              id: lint_typos
+
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
+
+    error-comment:
+        uses: ./.github/workflows/error-comment.yml
+        needs: [typos]
+        if: always()
+        with:
+            step_status: ${{ needs.typos.outputs.status }}
+            header: lint-typos-error
+            message: |
+                ## ❌ **typos**
+
+                **There are some spell check issues _(typos)_ found!**
+
+                You can preview the annotations in [Files changed] tab.
+
+                [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files

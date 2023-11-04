@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Create/Delete Pull Request comment with error
+
+on:
+    workflow_call:
+        inputs:
+            header:
+                description: Pull Request comment header
+                required: true
+                type: string
+            message:
+                description: Content of the comment
+                required: true
+                type: string
+            step_status:
+                description: Status of the step which failed
+                required: true
+                type: string
+
+env:
+    CI: true
+
+permissions:
+    pull-requests: write
+
+jobs:
+    typos:
+        name: Error comment
+        runs-on: ubuntu-latest
+        steps:
+            - name: Debug status
+              run: |
+                  echo ${{ env.STEP_STATUS }}
+
+            - name: Create error comment
+              if: ${{ inputs.step_status == 'failure' }}
+              # https://github.com/marocchino/sticky-pull-request-comment
+              uses: marocchino/sticky-pull-request-comment@v2
+              with:
+                  header: ${{ inputs.header }}
+                  message: |
+                      ${{ inputs.message }}
+                      ---
+
+                      > **Note**
+                      > This comment will automatically get deleted once the issue(s) are resolved.
+
+            - name: Delete error comment
+              # Delete a previous comment when the issue has been resolved
+              if: ${{ inputs.step_status == 'success' }}
+              # https://github.com/marocchino/sticky-pull-request-comment
+              uses: marocchino/sticky-pull-request-comment@v2
+              with:
+                  header: ${{ inputs.header }}
+                  delete: true

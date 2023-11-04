@@ -31,13 +31,8 @@ jobs:
               uses: crate-ci/typos@v1.16.22
               id: lint_typos
 
-            - name: Test prev output
-              if: always()
-              run: |
-                  echo "prev job output: ${{ steps.lint_typos.outputs.error_message }}"
-
             - name: Create error comment
-              if: always() && (steps.lint_typos.outputs.error_message != null)
+              if: failure()
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:
@@ -47,18 +42,9 @@ jobs:
 
                       **There are some spell check issues _(typos)_ found in the Rust codebase!**
 
-                      You can preview the annotations in [Files changed] tab, or you can see the details below.
+                      You can preview the annotations in [Files changed] tab.
 
                       [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files
-
-                      <details>
-                        <summary>Error messages details</summary>
-
-                        ```
-                        ${{ steps.lint_typos.outputs.error_message }}
-                        ```
-
-                      </details>
 
                       ---
 
@@ -67,7 +53,7 @@ jobs:
 
             - name: Delete the error comment
               # Delete a previous comment when the issue has been resolved
-              if: ${{ steps.lint_typos.outputs.error_message == null }}
+              if: success()
               # https://github.com/marocchino/sticky-pull-request-comment
               uses: marocchino/sticky-pull-request-comment@v2
               with:

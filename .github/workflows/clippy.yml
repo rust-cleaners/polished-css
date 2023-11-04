@@ -7,7 +7,7 @@ on:
         inputs:
             flags:
                 description: Clippy command flags to pass after `cargo clippy`
-                default: --all-targets --no-deps --all-features
+                default: --all-targets --no-deps
                 required: false
                 type: string
             toolchain:

@@ -30,9 +30,10 @@ env:
 
 jobs:
     lint-clippy:
-        name: Lint
+        name: Lint / Clippy
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
                 toolchain: [stable, nightly]
         steps:
@@ -62,7 +63,7 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
 
     lint-typos:
-        name: Lint
+        name: Lint / typos
         runs-on: ubuntu-latest
         steps:
             - name: Checkout to the repository

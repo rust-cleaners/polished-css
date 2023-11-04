@@ -3,6 +3,7 @@
 name: Clippy
 
 on:
+    workflow_call:
     workflow_dispatch:
         inputs:
             args:

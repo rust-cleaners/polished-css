@@ -5,8 +5,8 @@ name: Clippy
 on:
     workflow_call:
         inputs:
-            args:
-                description: Clippy command args to pass
+            flags:
+                description: Clippy command flags to pass after `cargo clippy`
                 default: --all-targets --no-deps --all-features
                 required: false
                 type: string
@@ -49,12 +49,11 @@ jobs:
               uses: Swatinem/rust-cache@v2
 
             - name: Check Rust codebase with Clippy
-              # https://github.com/actions-rs/clippy-check
-              uses: actions-rs/clippy-check@v1
+              # https://github.com/giraffate/clippy-action
+              uses: giraffate/clippy-action@v1
               id: lint_clippy
               with:
-                  args: ${{ inputs.args }}
-                  toolchain: ${{ inputs.toolchain }}
+                  clippy_flags: ${{ inputs.flags }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Create error comment

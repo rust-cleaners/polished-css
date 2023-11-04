@@ -33,9 +33,7 @@ jobs:
 
             - name: Output the previous step status
               if: always()
-              run: |
-                  STATUS=${{ steps.lint_typos.outputs.status }}
-                  echo "::set-output name=status::$STATUS"
+              run: echo "name=status::${{ steps.lint_typos.outputs.status }}"
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml

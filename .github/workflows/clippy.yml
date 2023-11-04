@@ -80,3 +80,11 @@ jobs:
                 You can preview the annotations in [Files changed] tab.
 
                 [Files changed]: https://github.com/rust-cleaners/polished-css/pull/${{ github.event.pull_request.number }}/files
+
+                ---
+
+                You can also attempt to fix the issues with the command _(via `cargo-make` task)_:
+
+                ```sh
+                makers clippy-fix
+                ```

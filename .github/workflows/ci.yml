@@ -31,15 +31,13 @@ env:
 jobs:
     lint-clippy:
         name: Lint
-        runs-on: ubuntu-latest
+        uses: ./.github/workflows/clippy.yml
         strategy:
             fail-fast: false
             matrix:
                 toolchain: [stable, nightly]
-        steps:
-            - uses: ./.github/workflows/clippy.yml
-              with:
-                  toolchain: ${{ matrix.toolchain }}
+        with:
+            toolchain: ${{ matrix.toolchain }}
 
     lint-typos:
         name: Lint / typos

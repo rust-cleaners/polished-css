@@ -29,6 +29,10 @@ jobs:
         name: Error comment
         runs-on: ubuntu-latest
         steps:
+            - name: Debug status
+              run: |
+                  echo ${{ "steps.${{ inputs.step_id }}.outputs.status" }}
+
             - name: Create error comment
               if: steps.${{ inputs.step_id }}.outputs.status == "failure"
               # https://github.com/marocchino/sticky-pull-request-comment

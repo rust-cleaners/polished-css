@@ -16,6 +16,7 @@ jobs:
     pr-title:
         name: Validate the Pull Request title
         runs-on: ubuntu-latest
+        timeout-minutes: 1
         steps:
             - name: Check if the Pull Request title is semantic
               id: lint_pr_title
@@ -42,17 +43,26 @@ jobs:
                       ----
 
                       In this repository project **we adopted [Conventional Commits specification](https://www.conventionalcommits.org/en/)** to ensure consistency in Git logs.
+                      We're using the `Squash and merge` strategy once this Pull Request gets reviewed and approved.
 
-                      For this reason, **we expect every Pull Request titles _(to the important branches)_ to be semantic**, and looks like the proposed title needs to be adjusted.\
-                      We're using the "Squash and merge" strategy, so what matters the most to us is the title.
+                      For this reason, **we expect every Pull Request titles _(to the important branches)_ to be semantic**,\
+                      and looks like the proposed title needs to be adjusted.
 
-                      Please don't feel discouraged, and take a look at the error message below to see the details of error message.
+                      Please don't feel discouraged, and take a look at the error message details below:
+
+                      <details>
+                        <summary>Error message details</summary>
+
+                        ```
+                        ${{ steps.lint_pr_title.outputs.error_message }}
+                        ```
+
+                      </details>
 
                       ---
 
-                      ```
-                      ${{ steps.lint_pr_title.outputs.error_message }}
-                      ```
+                      > **Note:**
+                      > This comment will automatically get deleted once the issue is resolved.
 
             - name: Delete the error comment
               # Delete a previous comment when the issue has been resolved

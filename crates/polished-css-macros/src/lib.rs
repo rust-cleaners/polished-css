@@ -1,18 +1,17 @@
 #![deny(
-	// clippy::all,
+	clippy::all,
     // Groups
-	// clippy::cargo,
-	// clippy::complexity,
-	// clippy::correctness,
-	//    clippy::nursery,
-	// clippy::pedantic,
-	// clippy::perf,
-	// clippy::suspicious,
+	clippy::cargo,
+	clippy::complexity,
+	clippy::correctness,
+	// clippy::nursery,
+	clippy::pedantic,
+	clippy::perf,
+	clippy::suspicious,
     // Adjustments
-	// clippy::cast_possible_truncation,
-	// clippy::cast_precision_loss,
-	// clippy::panic,
-	// clippy::unwrap_used
+	clippy::cast_possible_truncation,
+	clippy::cast_precision_loss,
+	clippy::unwrap_used
 )]
 // #![deny(missing_docs)]
 #![deny(missing_debug_implementations)]
@@ -297,7 +296,7 @@ pub fn create_trait_from_enum_impl(args: TokenStream, input: TokenStream) -> Tok
 	let unparsed_input = input.clone();
 	let ast = parse_macro_input!(unparsed_input as ItemImpl);
 	let trait_impl: TokenStream =
-		attribute::data_type::create_trait_from_enum_impl(args.into(), &ast).into();
+		attribute::data_type::create_trait_from_enum_impl(&args.into(), &ast).into();
 	[input, trait_impl]
 		.into_iter()
 		.collect()

@@ -20,7 +20,7 @@ impl ColorFunction {
 	}
 
 	pub(crate) fn get_trait_ident(&self) -> Ident {
-		let name = format!("{}{}", self, DATA_TYPE_TRAIT_SUFFIX);
+		let name = format!("{self}{DATA_TYPE_TRAIT_SUFFIX}");
 		Ident::new(&name, Spanned::span(&name))
 	}
 }

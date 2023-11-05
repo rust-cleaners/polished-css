@@ -13,7 +13,9 @@ use crate::{
 pub(crate) fn impl_from_data_type(ast: &DeriveInput) -> TokenStream {
 	let PropertyOptions { data_type, .. } = get_property_options(ast);
 
-	if !data_type.is_empty() {
+	if data_type.is_empty() {
+		TokenStream::default()
+	} else {
 		let struct_ident = &ast.ident;
 		let generics = &ast.generics;
 		let (impl_generics, type_generics, where_clause) = generics.split_for_impl();
@@ -35,8 +37,6 @@ pub(crate) fn impl_from_data_type(ast: &DeriveInput) -> TokenStream {
 			#impl_data_types_values_traits
 
 		}
-	} else {
-		TokenStream::default()
 	}
 }
 

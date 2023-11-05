@@ -35,7 +35,7 @@ pub(crate) fn create_property_value_enum(ast: &DeriveInput) -> TokenStream {
 				ident.clone()
 			} else {
 				Ident::new(
-					format!("{}{}", DATA_TYPE_OPTIONAL_PREFIX, ident).as_str(),
+					format!("{DATA_TYPE_OPTIONAL_PREFIX}{ident}").as_str(),
 					ident.span(),
 				)
 			};

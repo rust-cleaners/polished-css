@@ -51,13 +51,13 @@ pub(crate) fn get_enum_variants_idents_for_keywords(
 			.iter()
 			.map(|k| create_variant_ident(ast, k))
 			.collect::<Vec<Ident>>(),
-		if !keywords.is_empty() {
+		if keywords.is_empty() {
+			Vec::default()
+		} else {
 			keywords
 				.split(',')
 				.map(|keyword| create_variant_ident(ast, keyword))
 				.collect()
-		} else {
-			Vec::default()
 		},
 	]
 	.concat()
@@ -69,7 +69,9 @@ pub(crate) fn get_enum_variants_idents_for_data_types(
 ) -> Vec<Ident> {
 	let PropertyOptions { data_type, .. } = options;
 
-	if !data_type.is_empty() {
+	if data_type.is_empty() {
+		Vec::default()
+	} else {
 		data_type
 			.split(',')
 			.map(|data_type| {
@@ -77,7 +79,5 @@ pub(crate) fn get_enum_variants_idents_for_data_types(
 				get_enum_variant_ident_for_data_type(ast, &data_type)
 			})
 			.collect()
-	} else {
-		Vec::default()
 	}
 }

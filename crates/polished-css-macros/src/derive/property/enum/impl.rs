@@ -20,7 +20,7 @@ pub(crate) fn create_property_impl(ast: &DeriveInput) -> TokenStream {
 			let method_name = variant
 				.to_string()
 				.to_case(Case::Snake);
-			let method_ident = get_method_ident(ast, method_name);
+			let method_ident = get_method_ident(ast, &method_name);
 			quote! {
 				#[must_use]
 				pub fn #method_ident() -> Self {
@@ -37,19 +37,19 @@ pub(crate) fn create_property_impl(ast: &DeriveInput) -> TokenStream {
 	}
 }
 
-fn get_method_ident(ast: &DeriveInput, name: String) -> Ident {
-	if has_syntax_reserved_keywords(&name) {
+fn get_method_ident(ast: &DeriveInput, name: &str) -> Ident {
+	if has_syntax_reserved_keywords(name) {
 		Ident::new_raw(
 			// NOTE: Ugly workaround, because:
 			// https://docs.rs/syn/latest/syn/struct.Ident.html#method.new_raw
 			if name.eq("super") {
 				"keyword_super"
 			} else {
-				&name
+				name
 			},
 			ast.ident.span(),
 		)
 	} else {
-		Ident::new(&name, ast.ident.span())
+		Ident::new(name, ast.ident.span())
 	}
 }

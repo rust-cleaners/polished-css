@@ -47,28 +47,26 @@ fn impl_dependent_data_types(
 	let mut dependencies = data_type.get_dependant_data_types();
 
 	while !dependencies.is_empty() {
-		dependencies
-			.iter()
-			.for_each(|data_type| {
-				let data_type_ident = data_type.get_ident();
-				let data_type_trait_ident = data_type.get_trait_ident();
-				let color_functions =
-					impl_dependent_color_functions(ast, data_type, enum_variant_ident);
-				let units = impl_dependent_units(ast, data_type, enum_variant_ident);
+		for data_type in dependencies {
+			let data_type_ident = data_type.get_ident();
+			let data_type_trait_ident = data_type.get_trait_ident();
+			let color_functions =
+				impl_dependent_color_functions(ast, data_type, enum_variant_ident);
+			let units = impl_dependent_units(ast, data_type, enum_variant_ident);
 
-				stream.extend(quote! {
-					impl From<crate::data_type::#data_type_ident> for #enum_ident {
-						fn from(value: crate::data_type::#data_type_ident) -> Self {
-							Self::#enum_variant_ident(value.into())
-						}
+			stream.extend(quote! {
+				impl From<crate::data_type::#data_type_ident> for #enum_ident {
+					fn from(value: crate::data_type::#data_type_ident) -> Self {
+						Self::#enum_variant_ident(value.into())
 					}
-					impl crate::data_type::#data_type_trait_ident for #enum_ident {}
-					#color_functions
-					#units
-				});
-
-				dependencies = data_type.get_dependant_data_types();
+				}
+				impl crate::data_type::#data_type_trait_ident for #enum_ident {}
+				#color_functions
+				#units
 			});
+
+			dependencies = data_type.get_dependant_data_types();
+		}
 	}
 
 	stream

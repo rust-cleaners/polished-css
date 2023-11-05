@@ -73,8 +73,7 @@ fn get_enum_variants_lines_to_display(data_enum: &DataEnum) -> TokenStream {
 			let ident = &variant.ident;
 			match &variant.fields {
 				// NOTE: The commas needs to be there!
-				Fields::Named(_) => quote!(Self::#ident(v) => v.to_string(),),
-				Fields::Unnamed(_) => quote!(Self::#ident(v) => v.to_string(),),
+				Fields::Named(_) | Fields::Unnamed(_) => quote!(Self::#ident(v) => v.to_string(),),
 				Fields::Unit => {
 					let name = ident
 						.to_string()

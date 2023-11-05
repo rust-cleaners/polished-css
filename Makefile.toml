@@ -47,6 +47,20 @@ command = "cargo"
 args = ["fmt", "--verbose"]
 dependencies = ["pre-format"]
 
+# https://github.com/nextest-rs/nextest
+[tasks.pre-test]
+category = "hooks"
+description = "Run tasks before the `test`"
+install_crate = "cargo-nextest"
+command = "cargo"
+args = ["nextest", "--version"]
+[tasks.test]
+category = "test"
+description = "Run crate tests with `nextest`"
+command = "cargo"
+args = ["nextest", "run", "--all-features", "--no-fail-fast"]
+dependencies = ["pre-test"]
+
 # https://github.com/crate-ci/typos
 [tasks.pre-typos]
 workspace = false

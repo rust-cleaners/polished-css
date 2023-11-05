@@ -49,3 +49,7 @@ jobs:
     lint-typos:
         name: Lint
         uses: ./.github/workflows/typos.yml
+
+    test-nextest:
+        name: Test
+        uses: ./.github/workflows/nextest.yml

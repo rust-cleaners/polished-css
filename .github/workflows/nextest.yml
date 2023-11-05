@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: nextest
+
+on:
+    workflow_call:
+        inputs:
+            toolchain:
+                description: Rust toolchain channel to use
+                type: string
+                required: false
+                default: nightly
+    workflow_dispatch:
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    pull-requests: write
+
+jobs:
+    nextest:
+        name: nextest
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 3
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              # https://github.com/moonrepo/setup-rust
+              uses: moonrepo/setup-rust@v1
+              with:
+                  bins: cargo-nextest
+                  cache: true
+                  channel: ${{ inputs.toolchain }}
+                  profile: minimal
+
+            - name: Run tests with latest nextest release
+              run: nextest run --all-features --profile ci
+
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
+
+    error-comment:
+        uses: ./.github/workflows/error-comment.yml
+        needs: [nextest]
+        if: always()
+        with:
+            step_status: ${{ needs.nextest.outputs.status }}
+            header: test-nextest-error-${{ inputs.toolchain }}
+            message: |
+                ## ❌ **nextest**
+
+                Some of the test(s) has failed on the toolchain channel: **${{ inputs.toolchain }}**

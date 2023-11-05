@@ -38,6 +38,8 @@ jobs:
             - name: Setup Rust
               # https://github.com/moonrepo/setup-rust
               uses: moonrepo/setup-rust@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   bins: cargo-nextest
                   cache: true
@@ -45,7 +47,7 @@ jobs:
                   profile: minimal
 
             - name: Run tests with latest nextest release
-              run: nextest run --all-features --profile ci
+              run: cargo nextest run --all-features --profile ci
 
             - run: echo "status=failure" >> $GITHUB_OUTPUT
               id: failure

@@ -10,7 +10,7 @@ use crate::{
 	utils::DataType,
 };
 
-pub fn impl_from_data_type(ast: &DeriveInput) -> TokenStream {
+pub(crate) fn impl_from_data_type(ast: &DeriveInput) -> TokenStream {
 	let PropertyOptions { data_type, .. } = get_property_options(ast);
 
 	if !data_type.is_empty() {

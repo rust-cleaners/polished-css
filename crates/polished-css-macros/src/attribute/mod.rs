@@ -1,4 +1,4 @@
-pub mod data_type;
-pub mod utils;
+pub(crate) mod data_type;
+pub(crate) mod utils;
 
-pub use utils::*;
+pub(crate) use utils::*;

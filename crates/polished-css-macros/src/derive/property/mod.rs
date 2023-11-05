@@ -1,5 +1,5 @@
-pub mod r#enum;
-pub mod r#trait;
-pub mod utils;
+pub(crate) mod r#enum;
+pub(crate) mod r#trait;
+pub(crate) mod utils;
 
-pub use utils::*;
+pub(crate) use utils::*;

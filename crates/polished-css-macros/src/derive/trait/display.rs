@@ -15,7 +15,7 @@ struct DisplayOptions {
 	suffix: String,
 }
 
-pub fn impl_display(ast: &DeriveInput) -> TokenStream {
+pub(crate) fn impl_display(ast: &DeriveInput) -> TokenStream {
 	let DisplayOptions {
 		custom,
 		on_enum,

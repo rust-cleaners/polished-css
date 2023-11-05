@@ -10,7 +10,7 @@ use super::DATA_TYPE_TRAIT_SUFFIX;
 	strum_macros::Display, strum_macros::EnumIs, strum_macros::EnumString, strum_macros::AsRefStr,
 )]
 #[strum(serialize_all = "PascalCase")]
-pub enum Unit {
+pub(crate) enum Unit {
 	// Angle
 	Deg,
 	Rad,
@@ -84,7 +84,7 @@ pub enum Unit {
 }
 
 impl Unit {
-	pub const fn get_full_name(&self) -> &str {
+	pub(crate) const fn get_full_name(&self) -> &str {
 		match self {
 			// Angle
 			Self::Deg => "Degree",
@@ -159,14 +159,14 @@ impl Unit {
 		}
 	}
 
-	pub fn get_ident(&self) -> Ident {
+	pub(crate) fn get_ident(&self) -> Ident {
 		let name = self
 			.to_string()
 			.to_case(Case::Pascal);
 		Ident::new(&name, Spanned::span(&name))
 	}
 
-	pub fn get_enum_variant_ident(&self) -> Ident {
+	pub(crate) fn get_enum_variant_ident(&self) -> Ident {
 		let name = match self {
 			Self::Cqw => "QueryWidth",
 			Self::Cqh => "QueryHeight",
@@ -203,12 +203,12 @@ impl Unit {
 		Ident::new(name, Spanned::span(&name))
 	}
 
-	pub fn get_trait_ident(&self) -> Ident {
+	pub(crate) fn get_trait_ident(&self) -> Ident {
 		let name = format!("{}{}", self.get_full_name(), DATA_TYPE_TRAIT_SUFFIX);
 		Ident::new(&name, Spanned::span(&name))
 	}
 
-	pub fn get_from_name(name: &str) -> Self
+	pub(crate) fn get_from_name(name: &str) -> Self
 	where
 		Self: Sized,
 	{
@@ -219,7 +219,7 @@ impl Unit {
 		.unwrap_or_else(|_| panic!("Unrecognized unit name: {name}"))
 	}
 
-	pub fn get_from_ident(ident: &Ident) -> Self
+	pub(crate) fn get_from_ident(ident: &Ident) -> Self
 	where
 		Self: Sized,
 	{

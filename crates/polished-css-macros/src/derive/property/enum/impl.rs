@@ -9,7 +9,7 @@ use super::{
 	get_enum_property_value_ident, get_enum_variants_idents_for_keywords, get_property_options,
 };
 
-pub fn create_property_impl(ast: &DeriveInput) -> TokenStream {
+pub(crate) fn create_property_impl(ast: &DeriveInput) -> TokenStream {
 	let options = get_property_options(ast);
 	let struct_ident = &ast.ident;
 	let enum_value_ident = get_enum_property_value_ident(ast);

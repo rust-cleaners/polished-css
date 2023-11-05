@@ -1,4 +1,4 @@
-pub mod r#trait;
-pub mod utils;
+pub(crate) mod r#trait;
+pub(crate) mod utils;
 
 use utils::*;

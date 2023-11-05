@@ -33,7 +33,7 @@ permissions:
 
 jobs:
     hack_check:
-        name: CHeck
+        name: Check
         uses: ./.github/workflows/hack.yml
         strategy:
             fail-fast: false

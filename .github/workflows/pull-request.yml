@@ -16,7 +16,7 @@ jobs:
     pr_title:
         name: Validate the Pull Request title
         outputs:
-            error_message: ${{ lint_pr_title.outputs.error_message }}
+            error_message: ${{ steps.lint_pr_title.outputs.error_message }}
             status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
         timeout-minutes: 1

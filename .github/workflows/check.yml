@@ -1,0 +1,68 @@
+---
+name: hack
+
+on:
+    workflow_call:
+        inputs:
+            toolchain:
+                description: Rust toolchain channel to use
+                type: string
+                required: false
+                default: nightly
+    workflow_dispatch:
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    pull-requests: write
+
+jobs:
+    hack:
+        name: hack
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 3
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              # https://github.com/moonrepo/setup-rust
+              uses: moonrepo/setup-rust@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  bins: cargo-hack
+                  cache: true
+                  channel: ${{ inputs.toolchain }}
+                  profile: minimal
+
+            - name: Check if the code compiles with cargo hack
+              run: cargo hack check --feature-powerset --ignore-private --no-dev-deps --workspace
+
+            - run: echo "status=failure" >> $GITHUB_OUTPUT
+              id: failure
+              if: failure()
+            - run: echo "status=success" >> $GITHUB_OUTPUT
+              id: success
+              if: success()
+
+    error-comment:
+        uses: ./.github/workflows/error-comment.yml
+        needs: [hack]
+        if: always()
+        with:
+            step_status: ${{ needs.hack.outputs.status }}
+            header: check-hack-error-${{ inputs.toolchain }}
+            message: |
+                ## ❌ **hack**
+
+                The code in this Pull Request doesn't compile using the toolchain channel: **${{ inputs.toolchain }}**

@@ -34,11 +34,11 @@ permissions:
 jobs:
     lint-clippy:
         name: Lint
-        uses: ./.github/workflows/clippy.yml
         strategy:
             fail-fast: false
             matrix:
                 toolchain: [stable, nightly]
+        uses: ./.github/workflows/clippy.yml
         with:
             toolchain: ${{ matrix.toolchain }}
 
@@ -52,4 +52,10 @@ jobs:
 
     test-nextest:
         name: Test
+        strategy:
+            fail-fast: false
+            matrix:
+                toolchain: [stable, nightly]
         uses: ./.github/workflows/nextest.yml
+        with:
+            toolchain: ${{ matrix.toolchain }}

@@ -14,7 +14,7 @@ pub fn create_trait(ast: &DeriveInput) -> TokenStream {
 	let UnitOptions { trait_ident, .. } = get_unit_options(ast);
 	let struct_ident = &ast.ident;
 	let trait_ident = Ident::new(
-		format!("{}{}", trait_ident, DATA_TYPE_TRAIT_SUFFIX).as_str(),
+		format!("{trait_ident}{DATA_TYPE_TRAIT_SUFFIX}").as_str(),
 		struct_ident.span(),
 	);
 	let value_type_ident = get_tuple_struct_field_type(ast);
@@ -29,13 +29,12 @@ pub fn create_trait(ast: &DeriveInput) -> TokenStream {
 
 	let doc = format!(
 		r#"
-        Use a CSS unit `"{}"` _(`{}`)_ as value to store.
+        Use a CSS unit `"{method_name}"` _(`{struct_ident}`)_ as value to store.
 
         ### Resources
 
-        - [CSSWG specification](https://drafts.csswg.org/css-values/#{})
+        - [CSSWG specification](https://drafts.csswg.org/css-values/#{method_name})
         "#,
-		method_name, struct_ident, method_name
 	);
 
 	quote! {

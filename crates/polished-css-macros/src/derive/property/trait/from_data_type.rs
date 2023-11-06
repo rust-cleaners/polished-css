@@ -13,7 +13,9 @@ use crate::{
 pub fn impl_from_data_type(ast: &DeriveInput) -> TokenStream {
 	let PropertyOptions { data_type, .. } = get_property_options(ast);
 
-	if !data_type.is_empty() {
+	if data_type.is_empty() {
+		TokenStream::default()
+	} else {
 		let struct_ident = &ast.ident;
 		let generics = &ast.generics;
 		let (impl_generics, type_generics, where_clause) = generics.split_for_impl();
@@ -35,8 +37,6 @@ pub fn impl_from_data_type(ast: &DeriveInput) -> TokenStream {
 			#impl_data_types_values_traits
 
 		}
-	} else {
-		TokenStream::default()
 	}
 }
 
@@ -44,7 +44,7 @@ fn impl_data_types_values_traits(ast: &DeriveInput) -> TokenStream {
 	let PropertyOptions { data_type, .. } = get_property_options(ast);
 
 	let data_type = (!data_type.is_empty()).then(|| DataType::get_from_name(&data_type));
-	if let Some(data_type) = data_type {
+	data_type.map_or_else(TokenStream::default, |data_type| {
 		let data_type_ident = data_type.get_ident();
 		let enum_variant_data_type_ident = get_enum_variant_ident_for_data_type(ast, &data_type);
 		let trait_ident = data_type.get_trait_ident();
@@ -74,9 +74,7 @@ fn impl_data_types_values_traits(ast: &DeriveInput) -> TokenStream {
 			#color_functions
 			#units
 		}
-	} else {
-		TokenStream::default()
-	}
+	})
 }
 
 fn get_data_types_dependencies(ast: &DeriveInput, data_type: &DataType) -> TokenStream {

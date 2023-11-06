@@ -4,30 +4,27 @@
 	clippy::cargo,
 	clippy::complexity,
 	clippy::correctness,
-    clippy::nursery,
+	clippy::nursery,
 	clippy::pedantic,
 	clippy::perf,
 	clippy::suspicious,
     // Adjustments
 	clippy::cast_possible_truncation,
 	clippy::cast_precision_loss,
-	clippy::panic,
-	clippy::unwrap_used
+	clippy::unwrap_used,
+	// missing_docs,
+	missing_debug_implementations,
+	rust_2018_idioms,
+	unused_must_use,
+	unused_lifetimes,
+	unused_results
 )]
-#![deny(rustdoc::missing_crate_level_docs)]
-// #![deny(missing_docs)]
-#![deny(missing_debug_implementations)]
-#![deny(rust_2018_idioms)]
-#![deny(unreachable_pub)]
-#![deny(unused_must_use)]
-#![deny(unused_results)]
-#![deny(unused_lifetimes)]
-#![warn(unused_crate_dependencies)]
-#![warn(unused_tuple_struct_fields)]
-#![allow(clippy::module_name_repetitions)]
-#![allow(ambiguous_glob_reexports)]
-
-extern crate proc_macro;
+#![warn(unused_tuple_struct_fields, unused_crate_dependencies)]
+#![allow(
+	clippy::derive_partial_eq_without_eq,
+	clippy::module_name_repetitions,
+	ambiguous_glob_reexports
+)]
 
 mod attribute;
 mod derive;
@@ -300,7 +297,7 @@ pub fn create_trait_from_enum_impl(args: TokenStream, input: TokenStream) -> Tok
 	let unparsed_input = input.clone();
 	let ast = parse_macro_input!(unparsed_input as ItemImpl);
 	let trait_impl: TokenStream =
-		attribute::data_type::create_trait_from_enum_impl(args.into(), &ast).into();
+		attribute::data_type::create_trait_from_enum_impl(&args.into(), &ast).into();
 	[input, trait_impl]
 		.into_iter()
 		.collect()

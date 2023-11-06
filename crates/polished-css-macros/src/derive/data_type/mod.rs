@@ -1,1 +1,1 @@
-pub(crate) mod r#trait;
+pub mod r#trait;

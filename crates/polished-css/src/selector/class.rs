@@ -38,15 +38,9 @@ impl From<&str> for Class {
 pub fn escape_special_chars_in_class_name(value: &str) -> String {
 	Regex::new(r#"[!@#$%^&*()+\=\[\]{};':"\\|,.<>\\/?]"#)
 		.expect("Failed to create a regex for matching special characters in CSS class name.")
-		.replace_all(value, |caps: &Captures| {
+		.replace_all(value, |caps: &Captures<'_>| {
 			caps.iter()
-				.map(|char| {
-					if let Some(char) = char {
-						format!("\\{}", char.as_str())
-					} else {
-						String::new()
-					}
-				})
+				.map(|char| char.map_or_else(String::new, |char| format!("\\{}", char.as_str())))
 				.collect::<String>()
 		})
 		.to_string()

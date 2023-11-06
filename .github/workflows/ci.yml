@@ -59,7 +59,7 @@ jobs:
         name: Lint
         uses: ./.github/workflows/typos.yml
 
-    test-nextest:
+    test_nextest:
         name: Test
         needs: [hack_check]
         strategy:
@@ -69,3 +69,8 @@ jobs:
         uses: ./.github/workflows/nextest.yml
         with:
             toolchain: ${{ matrix.toolchain }}
+
+    test_coverage:
+        name: Test
+        needs: [test_nextest]
+        uses: ./.github/workflows/coverage.yml

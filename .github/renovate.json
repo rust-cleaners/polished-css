@@ -1,0 +1,41 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["github>rust-cleaners/.github"],
+	"packageRules": [
+		{
+			"groupName": "memory utilities dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["once_cell"]
+		},
+		{
+			"groupName": "string utilities dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["convert_case", "regex"]
+		},
+		{
+			"groupName": "enum utilities dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["strum", "strum_macros", "typed-builder"]
+		},
+		{
+			"groupName": "struct utilities dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["typed-builder"]
+		},
+		{
+			"groupName": "UI frameworks dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["yew"]
+		},
+		{
+			"groupName": "macro rules utilities dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["paste"]
+		},
+		{
+			"groupName": "proc macro dependencies",
+			"matchUpdateTypes": ["major", "minor", "patch", "rollback"],
+			"packagePatterns": ["darling", "proc-macro2", "quote", "syn"]
+		}
+	]
+}

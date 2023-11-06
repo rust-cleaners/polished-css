@@ -10,7 +10,7 @@ use crate::{
 
 use super::{get_unit_options, UnitOptions};
 
-pub(crate) fn create_trait(ast: &DeriveInput) -> TokenStream {
+pub fn create_trait(ast: &DeriveInput) -> TokenStream {
 	let UnitOptions { trait_ident, .. } = get_unit_options(ast);
 	let struct_ident = &ast.ident;
 	let trait_ident = Ident::new(

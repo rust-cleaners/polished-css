@@ -5,11 +5,11 @@ use syn::{DeriveInput, Ident};
 
 #[derive(darling::FromDeriveInput)]
 #[darling(attributes(default), supports(struct_tuple))]
-pub(crate) struct DefaultOptions {
-	pub(crate) value: Ident,
+pub struct DefaultOptions {
+	pub value: Ident,
 }
 
-pub(crate) fn impl_default(ast: &DeriveInput) -> TokenStream {
+pub fn impl_default(ast: &DeriveInput) -> TokenStream {
 	let DefaultOptions { value, .. } = DefaultOptions::from_derive_input(ast)
 		.expect("Failed to parse Default proc macro derive attributes");
 	let struct_ident = &ast.ident;

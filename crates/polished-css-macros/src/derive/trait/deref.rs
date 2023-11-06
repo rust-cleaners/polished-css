@@ -4,7 +4,7 @@ use syn::DeriveInput;
 
 use crate::derive::get_tuple_struct_field_type;
 
-pub(crate) fn impl_deref(ast: &DeriveInput) -> TokenStream {
+pub fn impl_deref(ast: &DeriveInput) -> TokenStream {
 	let struct_ident = &ast.ident;
 	let generics = &ast.generics;
 	let (impl_generics, type_generics, where_clause) = generics.split_for_impl();

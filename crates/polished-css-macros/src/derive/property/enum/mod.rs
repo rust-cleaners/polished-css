@@ -1,4 +1,4 @@
-pub(crate) mod r#impl;
+pub mod r#impl;
 
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
@@ -12,7 +12,7 @@ use super::utils::{
 	get_enum_variants_idents_for_keywords, get_property_options, PropertyOptions,
 };
 
-pub(crate) fn create_property_value_enum(ast: &DeriveInput) -> TokenStream {
+pub fn create_property_value_enum(ast: &DeriveInput) -> TokenStream {
 	let options = get_property_options(ast);
 	let property_struct_ident = &ast.ident;
 	let enum_ident = get_enum_property_value_ident(ast);

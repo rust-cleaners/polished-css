@@ -9,17 +9,17 @@ use super::DATA_TYPE_TRAIT_SUFFIX;
 	strum_macros::Display, strum_macros::EnumIs, strum_macros::EnumString, strum_macros::AsRefStr,
 )]
 #[strum(serialize_all = "PascalCase")]
-pub(crate) enum ColorFunction {
+pub enum ColorFunction {
 	Oklch,
 }
 
 impl ColorFunction {
-	pub(crate) fn get_ident(&self) -> Ident {
+	pub fn get_ident(&self) -> Ident {
 		let name = self.to_string();
 		Ident::new(&name, Spanned::span(&name))
 	}
 
-	pub(crate) fn get_trait_ident(&self) -> Ident {
+	pub fn get_trait_ident(&self) -> Ident {
 		let name = format!("{self}{DATA_TYPE_TRAIT_SUFFIX}");
 		Ident::new(&name, Spanned::span(&name))
 	}

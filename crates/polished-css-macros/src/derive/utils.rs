@@ -1,6 +1,6 @@
 use syn::{Data, DataEnum, DeriveInput, Fields, Type};
 
-pub(crate) fn get_tuple_struct_field_type(ast: &DeriveInput) -> &Type {
+pub fn get_tuple_struct_field_type(ast: &DeriveInput) -> &Type {
 	match &ast.data {
 		Data::Struct(data) => {
 			match &data.fields {
@@ -22,7 +22,7 @@ pub(crate) fn get_tuple_struct_field_type(ast: &DeriveInput) -> &Type {
 	}
 }
 
-pub(crate) fn get_data_enum(ast: &DeriveInput) -> &DataEnum {
+pub fn get_data_enum(ast: &DeriveInput) -> &DataEnum {
 	match &ast.data {
 		Data::Enum(data) => data,
 		_ => panic!("The provided data is not an enum"),

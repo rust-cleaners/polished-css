@@ -15,7 +15,7 @@ struct DisplayOptions {
 	suffix: String,
 }
 
-pub(crate) fn impl_display(ast: &DeriveInput) -> TokenStream {
+pub fn impl_display(ast: &DeriveInput) -> TokenStream {
 	let DisplayOptions {
 		custom,
 		on_enum,
@@ -46,14 +46,15 @@ pub(crate) fn impl_display(ast: &DeriveInput) -> TokenStream {
 		let struct_ident = &ast.ident;
 		let generics = &ast.generics;
 		let (impl_generics, type_generics, where_clause) = generics.split_for_impl();
-		let value: Expr = if let Some(custom) = custom {
-			Expr::Lit(ExprLit {
-				attrs: Vec::default(),
-				lit: Lit::Str(parse_quote! { #custom }),
-			})
-		} else {
-			syn::parse_str("self.0").expect("Failed to create display value.")
-		};
+		let value: Expr = custom.map_or_else(
+			|| syn::parse_str("self.0").expect("Failed to create display value."),
+			|custom| {
+				Expr::Lit(ExprLit {
+					attrs: Vec::default(),
+					lit: Lit::Str(parse_quote! { #custom }),
+				})
+			},
+		);
 
 		quote! {
 			impl #impl_generics std::fmt::Display for #struct_ident #type_generics #where_clause {

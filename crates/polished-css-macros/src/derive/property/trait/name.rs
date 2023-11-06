@@ -5,7 +5,7 @@ use syn::DeriveInput;
 
 use super::super::utils::{get_property_options, PropertyOptions};
 
-pub(crate) fn impl_property_name(ast: &DeriveInput) -> TokenStream {
+pub fn impl_property_name(ast: &DeriveInput) -> TokenStream {
 	let PropertyOptions {
 		display, custom, ..
 	} = get_property_options(ast);

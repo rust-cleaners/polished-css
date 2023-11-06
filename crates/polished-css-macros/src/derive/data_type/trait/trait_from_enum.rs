@@ -8,7 +8,7 @@ use crate::{
 	utils::{get_enum_variants, DATA_TYPE_TRAIT_SUFFIX},
 };
 
-pub(crate) fn create_trait_from_enum(ast: &DeriveInput) -> TokenStream {
+pub fn create_trait_from_enum(ast: &DeriveInput) -> TokenStream {
 	let enum_ident = &ast.ident;
 	let trait_ident = Ident::new(
 		&format!("{enum_ident}{DATA_TYPE_TRAIT_SUFFIX}"),

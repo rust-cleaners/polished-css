@@ -5,11 +5,11 @@ use syn::DeriveInput;
 
 #[derive(Default, darling::FromDeriveInput)]
 #[darling(default, attributes(atomic), supports(struct_tuple))]
-pub(crate) struct AtomicOptions {
-	pub(crate) name: String,
+pub struct AtomicOptions {
+	pub name: String,
 }
 
-pub(crate) fn impl_atomic(ast: &DeriveInput) -> TokenStream {
+pub fn impl_atomic(ast: &DeriveInput) -> TokenStream {
 	let struct_ident = &ast.ident;
 	let AtomicOptions { name, .. } =
 		AtomicOptions::from_derive_input(ast).expect("Could not parse atomic options.");

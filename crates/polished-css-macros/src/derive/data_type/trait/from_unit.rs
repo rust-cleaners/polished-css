@@ -7,7 +7,7 @@ use crate::{
 	utils::{get_enum_variant_associated_value_type_ident, get_enum_variants, Unit},
 };
 
-pub(crate) fn impl_from_units_traits(ast: &DeriveInput) -> TokenStream {
+pub fn impl_from_units_traits(ast: &DeriveInput) -> TokenStream {
 	let enum_data = get_data_enum(ast);
 	get_enum_variants(enum_data)
 		.iter()

@@ -5,24 +5,20 @@ use syn::{DeriveInput, Ident};
 use crate::utils::{remove_angle_brackets, DataType, PROPERTY_VALUE_SUFFIX};
 
 #[derive(darling::FromDeriveInput)]
-#[darling(attributes(property), supports(struct_tuple))]
-pub(crate) struct PropertyOptions {
-	#[darling(default)]
-	pub(crate) custom: bool,
-	#[darling(default)]
-	pub(crate) display: String,
-	#[darling(default)]
-	pub(crate) data_type: String,
-	#[darling(default)]
-	pub(crate) keywords: String,
+#[darling(attributes(default), attributes(property), supports(struct_tuple))]
+pub struct PropertyOptions {
+	pub custom: bool,
+	pub display: String,
+	pub data_type: String,
+	pub keywords: String,
 }
 
-pub(crate) fn get_property_options(ast: &DeriveInput) -> PropertyOptions {
+pub fn get_property_options(ast: &DeriveInput) -> PropertyOptions {
 	PropertyOptions::from_derive_input(ast)
 		.expect("Couldn't parse correctly the proc macro derive attributes for Property.")
 }
 
-pub(crate) fn get_enum_property_value_ident(ast: &DeriveInput) -> Ident {
+pub fn get_enum_property_value_ident(ast: &DeriveInput) -> Ident {
 	Ident::new(
 		&format!("{}{}", ast.ident, PROPERTY_VALUE_SUFFIX),
 		ast.ident.span(),
@@ -33,14 +29,11 @@ fn create_variant_ident(ast: &DeriveInput, name: &str) -> Ident {
 	Ident::new(&name.to_case(Case::Pascal), ast.ident.span())
 }
 
-pub(crate) fn get_enum_variant_ident_for_data_type(
-	ast: &DeriveInput,
-	data_type: &DataType,
-) -> Ident {
+pub fn get_enum_variant_ident_for_data_type(ast: &DeriveInput, data_type: &DataType) -> Ident {
 	create_variant_ident(ast, &remove_angle_brackets(data_type.as_ref()))
 }
 
-pub(crate) fn get_enum_variants_idents_for_keywords(
+pub fn get_enum_variants_idents_for_keywords(
 	ast: &DeriveInput,
 	options: &PropertyOptions,
 ) -> Vec<Ident> {
@@ -63,7 +56,7 @@ pub(crate) fn get_enum_variants_idents_for_keywords(
 	.concat()
 }
 
-pub(crate) fn get_enum_variants_idents_for_data_types(
+pub fn get_enum_variants_idents_for_data_types(
 	ast: &DeriveInput,
 	options: &PropertyOptions,
 ) -> Vec<Ident> {

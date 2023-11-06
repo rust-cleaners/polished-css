@@ -4,7 +4,7 @@ use syn::{DeriveInput, Ident};
 
 use crate::utils::DataType;
 
-pub(crate) fn impl_from_data_types_traits(ast: &DeriveInput) -> TokenStream {
+pub fn impl_from_data_types_traits(ast: &DeriveInput) -> TokenStream {
 	let enum_ident = &ast.ident;
 	let enum_data_type = DataType::get_from_ident(enum_ident);
 

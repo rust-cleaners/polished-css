@@ -1,14 +1,14 @@
-pub(crate) mod from_data_type;
-pub(crate) mod name;
+pub mod from_data_type;
+pub mod name;
 
-pub(crate) use from_data_type::*;
-pub(crate) use name::*;
+pub use from_data_type::*;
+pub use name::*;
 
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::DeriveInput;
 
-pub(crate) fn impl_property(ast: &DeriveInput) -> TokenStream {
+pub fn impl_property(ast: &DeriveInput) -> TokenStream {
 	let struct_ident = &ast.ident;
 	let generics = &ast.generics;
 	let (impl_generics, type_generics, where_clause) = generics.split_for_impl();

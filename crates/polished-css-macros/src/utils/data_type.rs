@@ -20,7 +20,7 @@ use super::{remove_angle_brackets, ColorFunction, Unit, DATA_TYPE_TRAIT_SUFFIX};
 	strum_macros::AsRefStr,
 )]
 #[strum(serialize_all = "PascalCase")]
-pub(crate) enum DataType {
+pub enum DataType {
 	AbsoluteColor,
 	AbsoluteColorFunction,
 	AbsoluteLength,
@@ -56,7 +56,7 @@ pub(crate) enum DataType {
 }
 
 impl DataType {
-	pub(crate) fn get_ident(&self) -> Ident {
+	pub fn get_ident(&self) -> Ident {
 		let name = if self.is_string() || self.is_flex() {
 			format!("{}{}", DATA_TYPE_OPTIONAL_PREFIX, self.as_ref())
 		} else {
@@ -66,7 +66,7 @@ impl DataType {
 		Ident::new(&name, Spanned::span(&name))
 	}
 
-	pub(crate) fn get_enum_variant_ident(&self) -> Ident {
+	pub fn get_enum_variant_ident(&self) -> Ident {
 		let name = match self {
 			Self::AbsoluteColor | Self::AbsoluteLength => "Absolute",
 			Self::AbsoluteColorFunction => "Function",
@@ -82,12 +82,12 @@ impl DataType {
 		Ident::new(name, Spanned::span(&name))
 	}
 
-	pub(crate) fn get_trait_ident(&self) -> Ident {
+	pub fn get_trait_ident(&self) -> Ident {
 		let name = format!("{}{}", self.as_ref(), DATA_TYPE_TRAIT_SUFFIX).to_case(Case::Pascal);
 		Ident::new(&name, Spanned::span(&name))
 	}
 
-	pub(crate) const fn get_dependant_data_types(&self) -> &[Self] {
+	pub const fn get_dependant_data_types(&self) -> &[Self] {
 		match self {
 			Self::AbsoluteColor => {
 				&[
@@ -116,14 +116,14 @@ impl DataType {
 		}
 	}
 
-	pub(crate) const fn get_dependant_color_functions(&self) -> &[ColorFunction] {
+	pub const fn get_dependant_color_functions(&self) -> &[ColorFunction] {
 		match self {
 			Self::AbsoluteColorFunction => &[ColorFunction::Oklch],
 			_ => &[],
 		}
 	}
 
-	pub(crate) const fn get_dependant_units(&self) -> &[Unit] {
+	pub const fn get_dependant_units(&self) -> &[Unit] {
 		match self {
 			Self::AbsoluteLength => {
 				&[
@@ -199,7 +199,7 @@ impl DataType {
 		}
 	}
 
-	pub(crate) fn get_from_name(name: &str) -> Self
+	pub fn get_from_name(name: &str) -> Self
 	where
 		Self: Sized,
 	{
@@ -207,7 +207,7 @@ impl DataType {
 		Self::try_from(name.as_str()).unwrap_or_else(|_| panic!("Unrecognized data type: {name}"))
 	}
 
-	pub(crate) fn get_from_ident(ident: &Ident) -> Self
+	pub fn get_from_ident(ident: &Ident) -> Self
 	where
 		Self: Sized,
 	{

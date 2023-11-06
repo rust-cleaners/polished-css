@@ -7,7 +7,7 @@ use syn::{
 
 use crate::{attribute::get_data_type_from_item_impl, utils::DataType};
 
-pub(crate) fn create_trait_from_enum_impl(_args: &TokenStream, ast: &ItemImpl) -> TokenStream {
+pub fn create_trait_from_enum_impl(_args: &TokenStream, ast: &ItemImpl) -> TokenStream {
 	let data_type = get_data_type_from_item_impl(ast);
 	let data_type_ident = data_type.get_ident();
 	let data_type_methods_from_impl = get_data_type_methods_from_impl(ast);
@@ -29,7 +29,7 @@ pub(crate) fn create_trait_from_enum_impl(_args: &TokenStream, ast: &ItemImpl) -
 	}
 }
 
-pub(crate) fn get_constructor_ident(data_type: &DataType) -> Ident {
+pub fn get_constructor_ident(data_type: &DataType) -> Ident {
 	let data_type_ident = data_type.get_ident();
 	Ident::new(
 		data_type_ident

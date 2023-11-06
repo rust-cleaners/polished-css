@@ -4,7 +4,7 @@
 	clippy::cargo,
 	clippy::complexity,
 	clippy::correctness,
-	// clippy::nursery,
+	clippy::nursery,
 	clippy::pedantic,
 	clippy::perf,
 	clippy::suspicious,
@@ -16,11 +16,10 @@
 // #![deny(missing_docs)]
 #![deny(missing_debug_implementations)]
 #![deny(rust_2018_idioms)]
-#![deny(unreachable_pub)]
-#![deny(unused_must_use)]
-#![deny(unused_results)]
-#![deny(unused_lifetimes)]
 #![warn(unused_crate_dependencies)]
+#![deny(unused_must_use)]
+#![deny(unused_lifetimes)]
+#![deny(unused_results)]
 #![warn(unused_tuple_struct_fields)]
 #![allow(clippy::module_name_repetitions)]
 #![allow(ambiguous_glob_reexports)]

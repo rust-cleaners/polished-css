@@ -45,4 +45,4 @@ jobs:
               # https://github.com/actions-rs/audit-check
               uses: actions-rs/audit-check@v1
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }
+                  token: ${{ secrets.GITHUB_TOKEN }}

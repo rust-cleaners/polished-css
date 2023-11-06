@@ -35,22 +35,22 @@ jobs:
         outputs:
             status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
-        timeout-minutes: 3
+        timeout-minutes: 1
         steps:
             - name: Checkout to the repository
               # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
             - name: Setup Rust
-              # https://github.com/dtolnay/rust-toolchain
-              uses: dtolnay/rust-toolchain@v1
+              # https://github.com/moonrepo/setup-rust
+              uses: moonrepo/setup-rust@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
+                  cache: true
                   components: rustfmt
-                  toolchain: nightly
-
-            - name: Setup the cache
-              # https://github.com/Swatinem/rust-cache
-              uses: Swatinem/rust-cache@v2
+                  channel: ${{ inputs.toolchain }}
+                  profile: minimal
 
             - name: Check Rust codebase format with rustfmt
               # https://github.com/LoliGothick/rustfmt-check

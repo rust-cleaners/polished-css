@@ -28,6 +28,7 @@ create_struct!(MarginRight, "m-r");
 
 #[cfg(test)]
 mod test {
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn margins() {
 		macro_rules! test_property {

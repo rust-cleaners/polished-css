@@ -7,10 +7,11 @@ use crate::{
 	derive::get_data_enum,
 	utils::{get_enum_variants, DATA_TYPE_TRAIT_SUFFIX},
 };
+
 pub fn create_trait_from_enum(ast: &DeriveInput) -> TokenStream {
 	let enum_ident = &ast.ident;
 	let trait_ident = Ident::new(
-		&format!("{}{}", enum_ident, DATA_TYPE_TRAIT_SUFFIX),
+		&format!("{enum_ident}{DATA_TYPE_TRAIT_SUFFIX}"),
 		enum_ident.span(),
 	);
 	let methods = get_methods_stream(ast);

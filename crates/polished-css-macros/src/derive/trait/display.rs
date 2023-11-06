@@ -46,14 +46,15 @@ pub fn impl_display(ast: &DeriveInput) -> TokenStream {
 		let struct_ident = &ast.ident;
 		let generics = &ast.generics;
 		let (impl_generics, type_generics, where_clause) = generics.split_for_impl();
-		let value: Expr = if let Some(custom) = custom {
-			Expr::Lit(ExprLit {
-				attrs: Vec::default(),
-				lit: Lit::Str(parse_quote! { #custom }),
-			})
-		} else {
-			syn::parse_str("self.0").expect("Failed to create display value.")
-		};
+		let value: Expr = custom.map_or_else(
+			|| syn::parse_str("self.0").expect("Failed to create display value."),
+			|custom| {
+				Expr::Lit(ExprLit {
+					attrs: Vec::default(),
+					lit: Lit::Str(parse_quote! { #custom }),
+				})
+			},
+		);
 
 		quote! {
 			impl #impl_generics std::fmt::Display for #struct_ident #type_generics #where_clause {
@@ -73,8 +74,7 @@ fn get_enum_variants_lines_to_display(data_enum: &DataEnum) -> TokenStream {
 			let ident = &variant.ident;
 			match &variant.fields {
 				// NOTE: The commas needs to be there!
-				Fields::Named(_) => quote!(Self::#ident(v) => v.to_string(),),
-				Fields::Unnamed(_) => quote!(Self::#ident(v) => v.to_string(),),
+				Fields::Named(_) | Fields::Unnamed(_) => quote!(Self::#ident(v) => v.to_string(),),
 				Fields::Unit => {
 					let name = ident
 						.to_string()

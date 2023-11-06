@@ -1,0 +1,5 @@
+# https://doc.rust-lang.org/cargo/reference/config.html
+
+# https://blog.rust-lang.org/inside-rust/2023/01/30/cargo-sparse-protocol.html
+[registries.crates-io]
+protocol = "sparse"

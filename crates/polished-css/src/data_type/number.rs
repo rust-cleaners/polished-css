@@ -5,7 +5,7 @@ pub struct Number(pub f64);
 
 impl Number {
 	#[must_use]
-	pub fn zero() -> Self {
+	pub const fn zero() -> Self {
 		Self(0.0)
 	}
 }

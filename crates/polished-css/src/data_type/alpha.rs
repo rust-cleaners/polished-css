@@ -43,12 +43,12 @@ impl Alpha {
 	}
 
 	#[must_use]
-	pub fn full() -> Self {
+	pub const fn full() -> Self {
 		Self::Percentage(Percentage::full())
 	}
 
 	#[must_use]
-	pub fn reset() -> Self {
+	pub const fn reset() -> Self {
 		Self::Percentage(Percentage::reset())
 	}
 

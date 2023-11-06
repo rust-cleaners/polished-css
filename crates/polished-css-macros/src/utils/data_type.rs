@@ -68,12 +68,11 @@ impl DataType {
 
 	pub fn get_enum_variant_ident(&self) -> Ident {
 		let name = match self {
-			Self::AbsoluteColor => "Absolute",
+			Self::AbsoluteColor | Self::AbsoluteLength => "Absolute",
 			Self::AbsoluteColorFunction => "Function",
 			Self::HexColor => "Hex",
 			Self::NamedColor => "Named",
 			Self::SystemColor => "System",
-			Self::AbsoluteLength => "Absolute",
 			Self::RelativeLength => "Relative",
 			Self::ContainerLength => "Container",
 			Self::FontLength => "Font",
@@ -97,16 +96,15 @@ impl DataType {
 					Self::NamedColor,
 				]
 			}
-			Self::Alpha => &[Self::Number, Self::Percentage],
-			Self::Chroma => &[Self::Number, Self::Percentage],
+			Self::Alpha | Self::Chroma | Self::Lightness | Self::NumberPercentage => {
+				&[Self::Number, Self::Percentage]
+			}
 			Self::Color => &[Self::AbsoluteColor, Self::SystemColor],
 			Self::Dimension => &[Self::Frequency, Self::Length, Self::Resolution, Self::Time],
 			Self::FrequencyPercentage => &[Self::Frequency, Self::Percentage],
 			Self::Hue => &[Self::Angle, Self::Number],
 			Self::Length => &[Self::AbsoluteLength, Self::RelativeLength],
 			Self::LengthPercentage => &[Self::Length, Self::Percentage],
-			Self::Lightness => &[Self::Number, Self::Percentage],
-			Self::NumberPercentage => &[Self::Number, Self::Percentage],
 			Self::RelativeLength => {
 				&[
 					Self::ContainerLength,

@@ -24,6 +24,7 @@ create_struct!(MinHeight, "min-h");
 
 #[cfg(test)]
 mod test {
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn widths() {
 		macro_rules! test_property {
@@ -40,6 +41,7 @@ mod test {
 		test_property!(MinWidth, "min-width", "min-w");
 	}
 
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn heights() {
 		macro_rules! test_property {

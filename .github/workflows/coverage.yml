@@ -34,22 +34,15 @@ jobs:
               with:
                   bins: cargo-tarpaulin
                   cache: true
-                  cache-target: release
                   channel: nightly
                   profile: minimal
 
             - name: Run tarpaulin to generate tests coverage results and upload them to Coveralls.io
               run: >
                   cargo
-                  run
-                  --release
-                  --
                   tarpaulin
                   --all-features
                   --coveralls ${{ secrets.COVERALLS_TOKEN }}
-                  --engine llvm
-                  --follow-exec
                   --no-fail-fast
-                  --post-test-delay 10
                   --skip-clean
                   --workspace

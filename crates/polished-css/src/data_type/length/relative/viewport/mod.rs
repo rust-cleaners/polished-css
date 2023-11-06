@@ -48,10 +48,10 @@ impl ViewportLength {
 
 #[cfg(test)]
 mod test {
-	#[test]
-	fn display() {
-		use crate::data_type::length::relative::viewport::unit::*;
+	use crate::data_type::length::relative::viewport::unit::*;
 
+	#[test]
+	fn display_height() {
 		assert_eq!(
 			super::ViewportLength::vh(1.0).to_string(),
 			String::from("1vh")
@@ -68,7 +68,10 @@ mod test {
 			super::ViewportLength::dvh(1.0).to_string(),
 			String::from("1dvh")
 		);
+	}
 
+	#[test]
+	fn display_width() {
 		assert_eq!(
 			super::ViewportLength::vw(1.0).to_string(),
 			String::from("1vw")
@@ -85,7 +88,10 @@ mod test {
 			super::ViewportLength::dvw(1.0).to_string(),
 			String::from("1dvw")
 		);
+	}
 
+	#[test]
+	fn display_inline() {
 		assert_eq!(
 			super::ViewportLength::vi(1.0).to_string(),
 			String::from("1vi")
@@ -102,7 +108,10 @@ mod test {
 			super::ViewportLength::dvi(1.0).to_string(),
 			String::from("1dvi")
 		);
+	}
 
+	#[test]
+	fn display_block() {
 		assert_eq!(
 			super::ViewportLength::vb(1.0).to_string(),
 			String::from("1vb")
@@ -119,7 +128,10 @@ mod test {
 			super::ViewportLength::dvb(1.0).to_string(),
 			String::from("1dvb")
 		);
+	}
 
+	#[test]
+	fn display_vmin() {
 		assert_eq!(
 			super::ViewportLength::vmin(1.0).to_string(),
 			String::from("1vmin")
@@ -136,7 +148,10 @@ mod test {
 			super::ViewportLength::dvmin(1.0).to_string(),
 			String::from("1dvmin")
 		);
+	}
 
+	#[test]
+	fn display_vmax() {
 		assert_eq!(
 			super::ViewportLength::vmax(1.0).to_string(),
 			String::from("1vmax")

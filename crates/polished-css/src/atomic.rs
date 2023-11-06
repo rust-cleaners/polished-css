@@ -27,11 +27,6 @@ impl AtomicEventEmitter {
 		self.observer
 			.write()
 			.expect("Couldn't get a lock on atomic observer: poisoned")
-			.entry(event.clone())
-			.or_default();
-		self.observer
-			.write()
-			.expect("Couldn't get a lock on atomic observer: poisoned")
 			.get_mut(event)
 			.expect("Invalid atomic styles event type variant")
 			.push(listener);

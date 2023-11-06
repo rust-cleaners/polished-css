@@ -28,6 +28,7 @@ create_struct!(PaddingRight, "p-r");
 
 #[cfg(test)]
 mod test {
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn paddings() {
 		macro_rules! test_property {

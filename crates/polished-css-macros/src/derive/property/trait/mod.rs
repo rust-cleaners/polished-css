@@ -1,5 +1,5 @@
-pub(crate) mod from_data_type;
-pub(crate) mod name;
+pub mod from_data_type;
+pub mod name;
 
 pub use from_data_type::*;
 pub use name::*;

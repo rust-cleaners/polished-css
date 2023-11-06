@@ -1,7 +1,5 @@
 pub mod r#impl;
 
-pub use r#impl::*;
-
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -37,7 +35,7 @@ pub fn create_property_value_enum(ast: &DeriveInput) -> TokenStream {
 				ident.clone()
 			} else {
 				Ident::new(
-					format!("{}{}", DATA_TYPE_OPTIONAL_PREFIX, ident).as_str(),
+					format!("{DATA_TYPE_OPTIONAL_PREFIX}{ident}").as_str(),
 					ident.span(),
 				)
 			};

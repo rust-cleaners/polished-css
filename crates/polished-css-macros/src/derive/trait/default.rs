@@ -13,10 +13,7 @@ pub fn impl_default(ast: &DeriveInput) -> TokenStream {
 	let DefaultOptions { value, .. } = DefaultOptions::from_derive_input(ast)
 		.expect("Failed to parse Default proc macro derive attributes");
 	let struct_ident = &ast.ident;
-	let enum_value_ident = Ident::new(
-		format!("{}Value", struct_ident).as_str(),
-		struct_ident.span(),
-	);
+	let enum_value_ident = Ident::new(format!("{struct_ident}Value").as_str(), struct_ident.span());
 
 	quote! {
 		impl Default for #struct_ident<#enum_value_ident> {

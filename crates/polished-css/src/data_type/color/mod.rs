@@ -23,7 +23,7 @@ pub enum Color {
 #[polished_css_macros::create_trait_from_enum_impl()]
 impl Color {
 	#[must_use]
-	pub fn current_color() -> Self {
+	pub const fn current_color() -> Self {
 		Self::Currentcolor
 	}
 

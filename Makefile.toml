@@ -10,6 +10,20 @@ load_cargo_aliases = true
 skip_core_tasks = true
 
 # https://github.com/rust-lang/rust-check
+[tasks.pre-audit]
+category = "hooks"
+description = "Run tasks before the `audit`"
+install_crate = "cargo-audit"
+command = "cargo"
+args = ["audit", "--version"]
+[tasks.audit]
+category = "security"
+description = "Audit the codebase for vulnerabilities reported from RustSec"
+command = "cargo"
+args = ["audit"]
+dependencies = ["pre-audit"]
+
+# https://github.com/rust-lang/rust-check
 [tasks.pre-check]
 category = "hooks"
 description = "Run tasks before the `check`"

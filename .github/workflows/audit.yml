@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Audit
+
+on:
+    push:
+        paths:
+            - "**/Cargo.toml"
+            - "**/Cargo.lock"
+    workflow_call:
+    workflow_dispatch:
+    schedule:
+        - cron: "0 0 * * *"
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+jobs:
+    audit:
+        name: audit
+        runs-on: ubuntu-latest
+        timeout-minutes: 3
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              # https://github.com/moonrepo/setup-rust
+              uses: moonrepo/setup-rust@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  bins: cargo-audit
+                  cache: true
+                  channel: nightly
+                  profile: minimal
+
+            - name: Run security audit
+              # https://github.com/actions-rs/audit-check
+              uses: actions-rs/audit-check@v1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }

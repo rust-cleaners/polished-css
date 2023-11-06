@@ -86,6 +86,7 @@ create_border_width_struct!(BorderRightWidth, "bor-w-r");
 
 #[cfg(test)]
 mod test {
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn colors() {
 		macro_rules! test_property {
@@ -106,6 +107,7 @@ mod test {
 		test_property!(BorderRightColor, "border-right-color", "bor-c-r");
 	}
 
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn radiuses() {
 		macro_rules! test_property {
@@ -130,6 +132,7 @@ mod test {
         test_property!(BorderBottomRightRadius, "border-bottom-right-radius", "bor-r-b-r");
 	}
 
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn style() {
 		macro_rules! test_property {
@@ -151,6 +154,7 @@ mod test {
 		test_property!(BorderRightStyle, "border-right-style", "bor-s-r");
 	}
 
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn widths() {
 		macro_rules! test_property {

@@ -18,7 +18,7 @@ impl std::fmt::Display for Oklch {
 			self.hue,
 			self.alpha
 				.clone()
-				.unwrap_or(Alpha::visible())
+				.map_or_else(Alpha::visible, |alpha| alpha)
 		)
 	}
 }

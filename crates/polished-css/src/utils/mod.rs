@@ -15,7 +15,7 @@ impl std::fmt::Display for Nothing {
 		write!(f, "")
 	}
 }
-impl UnitDataType<Nothing> for Nothing {}
+impl UnitDataType<Self> for Nothing {}
 impl<T> UnitDataTypeContainer<T> for Nothing where
 	T: Clone + std::fmt::Debug + std::fmt::Display + PartialEq + UnitDataType<Self>
 {

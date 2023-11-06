@@ -1,11 +1,11 @@
 /// [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/integer)
 /// [CSSWG specification](https://drafts.csswg.org/css-values/#integer)
-#[derive(Clone, PartialEq, Debug, polished_css_macros::Deref, polished_css_macros::Display)]
+#[derive(Clone, Debug, PartialEq, polished_css_macros::Deref, polished_css_macros::Display)]
 pub struct Integer(pub isize);
 
 impl Integer {
 	#[must_use]
-	pub fn zero() -> Self {
+	pub const fn zero() -> Self {
 		Self(0)
 	}
 }

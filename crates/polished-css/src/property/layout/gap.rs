@@ -18,6 +18,7 @@ create_struct!(ColumnGap, "col");
 
 #[cfg(test)]
 mod test {
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn gaps() {
 		macro_rules! test_property {

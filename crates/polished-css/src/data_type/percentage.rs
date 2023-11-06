@@ -6,12 +6,12 @@ pub struct Percentage(pub f64);
 
 impl Percentage {
 	#[must_use]
-	pub fn full() -> Self {
+	pub const fn full() -> Self {
 		Self(100.0)
 	}
 
 	#[must_use]
-	pub fn reset() -> Self {
+	pub const fn reset() -> Self {
 		Self(0.0)
 	}
 }

@@ -79,7 +79,18 @@ args = ["nextest", "--version"]
 category = "test"
 description = "Run crate tests with `nextest`"
 command = "cargo"
-args = ["nextest", "run", "--all-features", "--no-fail-fast"]
+args = ["nextest", "run", "--all-features", "--no-fail-fast", "--verbose"]
+dependencies = ["pre-test"]
+[tasks.test-dev]
+category = "development"
+description = "Run task `test` with watch mode"
+install_crate = "cargo-watch"
+command = "cargo"
+args = [
+	"watch",
+	"--exec",
+	"nextest run --all-features --no-fail-fast --verbose",
+]
 dependencies = ["pre-test"]
 
 # https://github.com/crate-ci/typos

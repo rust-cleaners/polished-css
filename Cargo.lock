@@ -814,7 +814,6 @@ dependencies = [
  "paste",
  "polished-css-macros",
  "regex",
- "strum",
  "strum_macros",
  "typed-builder",
  "yew",

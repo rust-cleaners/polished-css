@@ -21,7 +21,7 @@ readme = { workspace = true }
 
 [features]
 atomic = ["dep:once_cell"]
-yew = ["dep:yew"]
+yew = ["atomic", "dep:yew"]
 
 [dependencies]
 polished-css-macros = { path = "../polished-css-macros", version = "0.1.0" }

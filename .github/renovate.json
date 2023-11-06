@@ -1,7 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>rust-cleaners/.github//.github/renovate"],
-	"ignoreDeps": ["@workspace/shared"],
+	"extends": ["github>rust-cleaners/.github"],
 	"packageRules": [
 		{
 			"groupName": "memory utilities dependencies",

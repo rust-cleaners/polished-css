@@ -21,7 +21,7 @@ readme = { workspace = true }
 
 [features]
 atomic = ["dep:once_cell"]
-yew = ["dep:yew"]
+yew = ["atomic", "dep:yew"]
 
 [dependencies]
 polished-css-macros = { path = "../polished-css-macros", version = "0.1.0" }
@@ -29,7 +29,6 @@ polished-css-macros = { path = "../polished-css-macros", version = "0.1.0" }
 once_cell = { version = "1.18.0", optional = true }
 paste = { version = "1.0.14" }
 regex = { version = "1.10.0" }
-strum = { workspace = true }
 strum_macros = { workspace = true }
 typed-builder = { version = "0.16.2" }
 yew = { version = "0.21.0", optional = true }

@@ -27,7 +27,7 @@ pub enum AbsoluteColor {
 #[polished_css_macros::create_trait_from_enum_impl()]
 impl AbsoluteColor {
 	#[must_use]
-	pub fn transparent() -> Self {
+	pub const fn transparent() -> Self {
 		Self::Transparent
 	}
 }

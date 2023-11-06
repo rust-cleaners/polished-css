@@ -33,32 +33,47 @@ crate::create_unit!(Dvmax, "dvmax", f64, DynamicViewportMax);
 #[cfg(test)]
 mod test {
 	#[test]
-	fn display() {
+	fn display_height() {
 		assert_eq!(super::Vh(1.0).to_string(), String::from("1vh"));
 		assert_eq!(super::Svh(1.0).to_string(), String::from("1svh"));
 		assert_eq!(super::Lvh(1.0).to_string(), String::from("1lvh"));
 		assert_eq!(super::Dvh(1.0).to_string(), String::from("1dvh"));
+	}
 
+	#[test]
+	fn display_width() {
 		assert_eq!(super::Vw(1.0).to_string(), String::from("1vw"));
 		assert_eq!(super::Svw(1.0).to_string(), String::from("1svw"));
 		assert_eq!(super::Lvw(1.0).to_string(), String::from("1lvw"));
 		assert_eq!(super::Dvw(1.0).to_string(), String::from("1dvw"));
+	}
 
+	#[test]
+	fn display_inline() {
 		assert_eq!(super::Vi(1.0).to_string(), String::from("1vi"));
 		assert_eq!(super::Svi(1.0).to_string(), String::from("1svi"));
 		assert_eq!(super::Lvi(1.0).to_string(), String::from("1lvi"));
 		assert_eq!(super::Dvi(1.0).to_string(), String::from("1dvi"));
+	}
 
+	#[test]
+	fn display_block() {
 		assert_eq!(super::Vb(1.0).to_string(), String::from("1vb"));
 		assert_eq!(super::Svb(1.0).to_string(), String::from("1svb"));
 		assert_eq!(super::Lvb(1.0).to_string(), String::from("1lvb"));
 		assert_eq!(super::Dvb(1.0).to_string(), String::from("1dvb"));
+	}
 
+	#[test]
+	fn display_vmin() {
 		assert_eq!(super::Vmin(1.0).to_string(), String::from("1vmin"));
 		assert_eq!(super::Svmin(1.0).to_string(), String::from("1svmin"));
 		assert_eq!(super::Lvmin(1.0).to_string(), String::from("1lvmin"));
 		assert_eq!(super::Dvmin(1.0).to_string(), String::from("1dvmin"));
+	}
 
+	#[test]
+	fn display_vmax() {
 		assert_eq!(super::Vmax(1.0).to_string(), String::from("1vmax"));
 		assert_eq!(super::Svmax(1.0).to_string(), String::from("1svmax"));
 		assert_eq!(super::Lvmax(1.0).to_string(), String::from("1lvmax"));

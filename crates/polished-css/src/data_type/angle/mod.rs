@@ -22,7 +22,7 @@ pub enum Angle {
 #[polished_css_macros::create_trait_from_enum_impl()]
 impl Angle {
 	#[must_use]
-	fn reset() -> Self
+	const fn reset() -> Self
 	where
 		Self: Sized,
 	{

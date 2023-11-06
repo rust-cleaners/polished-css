@@ -8,6 +8,27 @@ RUST_BACKTRACE = "1"
 [config]
 load_cargo_aliases = true
 
+# https://github.com/rust-lang/rust-check
+[tasks.pre-check]
+category = "hooks"
+description = "Run tasks before the `check`"
+install_crate = "cargo-hack"
+command = "cargo"
+args = ["hack", "--version"]
+[tasks.check]
+category = "lint"
+description = "Check if the code compiles"
+command = "cargo"
+args = [
+	"hack",
+	"check",
+	"--feature-powerset",
+	"--ignore-private",
+	"--no-dev-deps",
+	"--workspace",
+]
+dependencies = ["pre-check"]
+
 # https://github.com/rust-lang/rust-clippy
 [tasks.pre-clippy]
 category = "hooks"

@@ -70,7 +70,7 @@ pub trait RatioStorage: From<Ratio> {
 	#[must_use]
 	fn ratio(value: Ratio) -> Self
 	where
-		Self: Sized + From<Ratio>,
+		Self: Sized,
 	{
 		Self::from(value)
 	}

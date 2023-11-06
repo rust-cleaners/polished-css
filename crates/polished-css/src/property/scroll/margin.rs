@@ -28,6 +28,7 @@ create_struct!(ScrollMarginRight, "scroll-m-r");
 
 #[cfg(test)]
 mod test {
+	#[allow(clippy::cognitive_complexity)]
 	#[test]
 	fn scroll_margins() {
 		macro_rules! test_property {

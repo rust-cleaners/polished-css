@@ -39,6 +39,8 @@ jobs:
             fail-fast: false
             matrix:
                 toolchain: [stable, nightly]
+        with:
+            toolchain: ${{ matrix.toolchain }}
 
     lint_clippy:
         name: Lint
@@ -59,7 +61,7 @@ jobs:
         name: Lint
         uses: ./.github/workflows/typos.yml
 
-    test-nextest:
+    test_nextest:
         name: Test
         needs: [hack_check]
         strategy:

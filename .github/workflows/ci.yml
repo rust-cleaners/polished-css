@@ -35,8 +35,8 @@ jobs:
     hack_check:
         name: Check
         uses: ./.github/workflows/hack.yml
-        concurrency:
-            group: ${{ matrix.toolchain }}
+        # concurrency:
+        #     group: ${{ matrix.toolchain }}
         strategy:
             fail-fast: false
             matrix:
@@ -48,8 +48,8 @@ jobs:
         name: Lint
         uses: ./.github/workflows/clippy.yml
         needs: [hack_check]
-        concurrency:
-            group: ${{ matrix.toolchain }}
+        # concurrency:
+        #     group: ${{ matrix.toolchain }}
         strategy:
             fail-fast: false
             matrix:
@@ -68,8 +68,8 @@ jobs:
     test_nextest:
         name: Test
         needs: [hack_check]
-        concurrency:
-            group: ${{ matrix.toolchain }}
+        # concurrency:
+        #     group: ${{ matrix.toolchain }}
         strategy:
             fail-fast: false
             matrix:

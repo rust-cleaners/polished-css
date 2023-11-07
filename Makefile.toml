@@ -7,6 +7,21 @@ RUST_BACKTRACE = "1"
 
 [config]
 load_cargo_aliases = true
+skip_core_tasks = true
+
+# https://github.com/rust-lang/rust-check
+[tasks.pre-audit]
+category = "hooks"
+description = "Run tasks before the `audit`"
+install_crate = "cargo-audit"
+command = "cargo"
+args = ["audit", "--version"]
+[tasks.audit]
+category = "security"
+description = "Audit the codebase for vulnerabilities reported from RustSec"
+command = "cargo"
+args = ["audit"]
+dependencies = ["pre-audit"]
 
 # https://github.com/rust-lang/rust-check
 [tasks.pre-check]
@@ -29,10 +44,11 @@ args = [
 ]
 dependencies = ["pre-check"]
 
+
 # https://github.com/rust-lang/rust-clippy
 [tasks.pre-clippy]
 category = "hooks"
-description = "Run tasks before the `lint`"
+description = "Run tasks before the `clippy`"
 install_crate = { rustup_component_name = "clippy" }
 command = "cargo"
 args = ["clippy", "--version"]
@@ -47,6 +63,28 @@ category = "fix"
 description = "Attempt to auto-fix Clippy issues"
 command = "cargo"
 args = ["clippy", "--all-targets", "--no-deps", "--fix"]
+
+# https://github.com/xd009642/tarpaulin/
+[tasks.pre-coverage]
+workspace = false
+category = "hooks"
+description = "Run tasks before the `coverage`"
+install_crate = "cargo-tarpaulin"
+command = "cargo"
+args = ["tarpaulin", "--version"]
+[tasks.coverage]
+workspace = false
+category = "test"
+description = "Get the tests coverage for this project"
+command = "cargo"
+args = [
+	"tarpaulin",
+	"--all-features",
+	"--no-fail-fast",
+	"--skip-clean",
+	"--workspace",
+]
+dependencies = ["pre-coverage"]
 
 # https://github.com/rust-lang/rustfmt
 [tasks.pre-format]

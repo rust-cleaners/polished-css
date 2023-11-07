@@ -36,6 +36,7 @@ pub fn impl_atomic(ast: &DeriveInput) -> TokenStream {
 			}
 		}
 
+		#[cfg(feature = "atomic")]
 		#[cfg(feature = "yew")]
 		impl<T> From<#struct_ident<T>> for yew::Classes
 		where

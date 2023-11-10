@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 ---
-name: hack
+name: nextest
 
 on:
     workflow_call:
@@ -24,8 +24,8 @@ permissions:
     pull-requests: write
 
 jobs:
-    hack:
-        name: hack
+    nextest:
+        name: nextest
         outputs:
             status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
@@ -41,13 +41,13 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  bins: cargo-hack
+                  bins: cargo-nextest
                   cache: true
                   channel: ${{ inputs.toolchain }}
                   profile: minimal
 
-            - name: Check if the code compiles with cargo hack
-              run: cargo hack check --feature-powerset --ignore-private --no-dev-deps --workspace
+            - name: Run tests with latest nextest release
+              run: cargo nextest run --all-features --profile ci
 
             - run: echo "status=failure" >> $GITHUB_OUTPUT
               id: failure
@@ -58,12 +58,12 @@ jobs:
 
     error-comment:
         uses: ./.github/workflows/error-comment.yml
-        needs: [hack]
+        needs: [nextest]
         if: always()
         with:
-            step_status: ${{ needs.hack.outputs.status }}
-            header: check-hack-error-${{ inputs.toolchain }}
+            step_status: ${{ needs.nextest.outputs.status }}
+            header: test-nextest-error-${{ inputs.toolchain }}
             message: |
-                ## ❌ **hack**
+                ## ❌ **nextest**
 
-                The code in this Pull Request doesn't compile using the toolchain channel: **${{ inputs.toolchain }}**
+                Some of the test(s) has failed on the toolchain channel: **${{ inputs.toolchain }}**

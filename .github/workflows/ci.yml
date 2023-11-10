@@ -60,3 +60,14 @@ jobs:
     lint_typos:
         name: Lint
         uses: ./.github/workflows/typos.yml
+
+    test_nextest:
+        name: Test
+        needs: [hack_check]
+        strategy:
+            fail-fast: false
+            matrix:
+                toolchain: [stable, nightly]
+        uses: ./.github/workflows/nextest.yml
+        with:
+            toolchain: ${{ matrix.toolchain }}

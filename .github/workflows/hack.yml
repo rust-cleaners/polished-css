@@ -35,17 +35,6 @@ jobs:
               # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
-            # FIXME: Delete this if the solution works
-            # - name: Setup Rust
-            #   # https://github.com/moonrepo/setup-rust
-            #   uses: moonrepo/setup-rust@v1
-            #   env:
-            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #   with:
-            #       bins: cargo-hack
-            #       cache: true
-            #       channel: ${{ inputs.toolchain }}
-            #       profile: minimal
             - name: Setup Rust
               # https://github.com/dtolnay/rust-toolchain
               uses: dtolnay/rust-toolchain@stable

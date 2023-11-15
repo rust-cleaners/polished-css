@@ -41,16 +41,30 @@ jobs:
               # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
+            # FIXME: Delete this if the solution works
+            # - name: Setup Rust
+            #   # https://github.com/moonrepo/setup-rust
+            #   uses: moonrepo/setup-rust@v1
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #   with:
+            #       cache: true
+            #       components: rustfmt
+            #       channel: ${{ inputs.toolchain }}
+            #       profile: minimal
             - name: Setup Rust
-              # https://github.com/moonrepo/setup-rust
-              uses: moonrepo/setup-rust@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              # https://github.com/dtolnay/rust-toolchain
+              uses: dtolnay/rust-toolchain@stable
+              id: toolchain
               with:
-                  cache: true
                   components: rustfmt
-                  channel: ${{ inputs.toolchain }}
-                  profile: minimal
+                  toolchain: ${{ inputs.toolchain }}
+
+            - name: Setup the cache
+              # https://github.com/Swatinem/rust-cache
+              uses: Swatinem/rust-cache@v2
+              with:
+                  key: ${{ inputs.toolchain }}-${{ steps.toolchain.outputs.cachekey }}-rustfmt
 
             - name: Check Rust codebase format with rustfmt
               # https://github.com/LoliGothick/rustfmt-check

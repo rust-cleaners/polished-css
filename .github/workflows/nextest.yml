@@ -29,22 +29,42 @@ jobs:
         outputs:
             status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
-        timeout-minutes: 3
+        timeout-minutes: 2
         steps:
             - name: Checkout to the repository
               # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
+            # FIXME: Delete this if the solution works
+            # - name: Setup Rust
+            #   # https://github.com/moonrepo/setup-rust
+            #   uses: moonrepo/setup-rust@v1
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #   with:
+            #       bins: cargo-nextest
+            #       cache: true
+            #       channel: ${{ inputs.toolchain }}
+            #       profile: minimal
             - name: Setup Rust
-              # https://github.com/moonrepo/setup-rust
-              uses: moonrepo/setup-rust@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              # https://github.com/dtolnay/rust-toolchain
+              uses: dtolnay/rust-toolchain@stable
+              id: toolchain
               with:
-                  bins: cargo-nextest
-                  cache: true
-                  channel: ${{ inputs.toolchain }}
-                  profile: minimal
+                  components: ""
+                  toolchain: ${{ inputs.toolchain }}
+
+            - name: Install cargo extensions binaries
+              # https://github.com/taiki-e/install-action
+              uses: taiki-e/install-action@v2
+              with:
+                  tool: cargo-nextest
+
+            - name: Setup the cache
+              # https://github.com/Swatinem/rust-cache
+              uses: Swatinem/rust-cache@v2
+              with:
+                  key: ${{ inputs.toolchain }}-${{ steps.toolchain.outputs.cachekey }}-nextest
 
             - name: Run tests with latest nextest release
               run: cargo nextest run --all-features --profile ci

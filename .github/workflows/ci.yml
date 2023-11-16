@@ -73,6 +73,6 @@ jobs:
             toolchain: ${{ matrix.toolchain }}
 
     tarpaulin:
-        name: Test
+        name: Coverage
         needs: [nextest]
         uses: ./.github/workflows/tarpaulin.yml

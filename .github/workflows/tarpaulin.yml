@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 ---
-name: Coverage
+name: tarpaulin
 
 on:
     workflow_call:
@@ -15,27 +15,37 @@ env:
     CARGO_TERM_COLOR: always
 
 jobs:
-    coverage:
-        name: coverage
+    tarpaulin:
+        name: tarpaulin
         outputs:
             status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
         runs-on: ubuntu-latest
-        timeout-minutes: 3
+        timeout-minutes: 2
         steps:
             - name: Checkout to the repository
               # https://github.com/actions/checkout
               uses: actions/checkout@v4
 
             - name: Setup Rust
-              # https://github.com/moonrepo/setup-rust
-              uses: moonrepo/setup-rust@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              # https://github.com/dtolnay/rust-toolchain
+              uses: dtolnay/rust-toolchain@stable
+              id: toolchain
               with:
-                  bins: cargo-tarpaulin
                   cache: true
-                  channel: nightly
-                  profile: minimal
+                  components: ""
+                  toolchain: nightly
+
+            - name: Install cargo extensions binaries
+              # https://github.com/taiki-e/install-action
+              uses: taiki-e/install-action@v2
+              with:
+                  tool: cargo-tarpaulin
+
+            - name: Setup the cache
+              # https://github.com/Swatinem/rust-cache
+              uses: Swatinem/rust-cache@v2
+              with:
+                  key: ${{ inputs.toolchain }}-${{ steps.toolchain.outputs.cachekey }}-tarpaulin
 
             - name: Run tarpaulin to generate tests coverage results and upload them to Coveralls.io
               run: >

@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Security
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - "**/Cargo.toml"
+            - "**/Cargo.lock"
+    workflow_dispatch:
+        inputs:
+            reason:
+                description: Reason of re-running this workflow
+                required: false
+                type: string
+    schedule:
+        - cron: "0 0 * * *"
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    checks: write
+    issues: write
+
+jobs:
+    audit:
+        name: Audit
+        uses: ./.github/workflows/audit.yml

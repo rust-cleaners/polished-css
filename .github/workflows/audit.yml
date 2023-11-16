@@ -3,14 +3,8 @@
 name: Audit
 
 on:
-    push:
-        paths:
-            - "**/Cargo.toml"
-            - "**/Cargo.lock"
     workflow_call:
     workflow_dispatch:
-    schedule:
-        - cron: "0 0 * * *"
 
 defaults:
     run:
@@ -28,7 +22,7 @@ jobs:
     audit:
         name: Audit
         runs-on: ubuntu-latest
-        timeout-minutes: 3
+        timeout-minutes: 2
         steps:
             - name: Checkout to the repository
               # https://github.com/actions/checkout

@@ -46,7 +46,6 @@ jobs:
               uses: dtolnay/rust-toolchain@stable
               id: toolchain
               with:
-                  cache: true
                   components: rustfmt
                   toolchain: ${{ inputs.toolchain }}
 

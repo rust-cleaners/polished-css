@@ -44,7 +44,6 @@ jobs:
               uses: dtolnay/rust-toolchain@stable
               id: toolchain
               with:
-                  cache: true
                   components: clippy
                   toolchain: ${{ inputs.toolchain }}
 

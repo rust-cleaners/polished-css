@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Audit
+
+on:
+    workflow_call:
+    workflow_dispatch:
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+permissions:
+    checks: write
+    issues: write
+
+jobs:
+    audit:
+        name: Audit
+        runs-on: ubuntu-latest
+        timeout-minutes: 2
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Run security audit (RustSec)
+              # https://github.com/actions-rs/audit-check
+              uses: actions-rs/audit-check@v1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}

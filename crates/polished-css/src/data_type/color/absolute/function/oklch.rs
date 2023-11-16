@@ -1,15 +1,32 @@
-use crate::data_type::{Alpha, Chroma, Hue, Lightness};
+use std::fmt;
+
+use crate::{
+	data_type::{Alpha, Chroma, Hue, Lightness},
+	prelude::UnitDataType,
+};
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Oklch {
-	pub lightness: Lightness,
-	pub chroma: Chroma,
-	pub hue: Hue,
-	pub alpha: Option<Alpha>,
+pub struct Oklch<L, C, H, A>
+where
+	L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Lightness>,
+	C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Chroma>,
+	H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Hue>,
+	A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Alpha>,
+{
+	pub lightness: L,
+	pub chroma: C,
+	pub hue: H,
+	pub alpha: Option<A>,
 }
 
-impl std::fmt::Display for Oklch {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<L, C, H, A> fmt::Display for Oklch<L, C, H, A>
+where
+	L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Lightness>,
+	C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Chroma>,
+	H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Hue>,
+	A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Alpha>,
+{
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		write!(
 			f,
 			"oklch({} {} {} / {})",
@@ -23,7 +40,7 @@ impl std::fmt::Display for Oklch {
 	}
 }
 
-impl<L, C, H, A> From<(L, C, H, A)> for Oklch
+impl<L, C, H, A> From<(L, C, H, A)> for Oklch<L, C, H, A>
 where
 	L: Into<Lightness>,
 	C: Into<Chroma>,
@@ -41,7 +58,7 @@ where
 	}
 }
 
-impl<L, C, H> From<(L, C, H)> for Oklch
+impl<L, C, H> From<(L, C, H)> for Oklch<L, C, H, Alpha>
 where
 	L: Into<Lightness>,
 	C: Into<Chroma>,
@@ -58,12 +75,15 @@ where
 	}
 }
 
-// TODO: Macro'ify it when possible
-pub trait OklchStorage: From<Oklch> {
+pub trait OklchStorage: From<Oklch<Lightness, Chroma, Hue, Alpha>> {
 	#[must_use]
-	fn oklch(value: Oklch) -> Self
+	fn oklch<L, C, H, A>(value: Oklch<L, C, H, A>) -> Self
 	where
 		Self: Sized,
+		L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Lightness>,
+		C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Chroma>,
+		H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Hue>,
+		A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Alpha>,
 	{
 		Self::from(value)
 	}

@@ -67,7 +67,6 @@ pub trait AbsoluteColorFunctionStorage: From<AbsoluteColorFunction> + OklchStora
 	// }
 }
 
-// TODO: Macro'ify it
 impl From<Oklch> for AbsoluteColorFunction {
 	fn from(value: Oklch) -> Self {
 		Self::Oklch(value)

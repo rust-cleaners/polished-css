@@ -4,6 +4,12 @@ name: tarpaulin
 
 on:
     workflow_call:
+        inputs:
+            toolchain:
+                description: Rust toolchain channel to use
+                type: string
+                required: false
+                default: nightly
     workflow_dispatch:
 
 defaults:
@@ -31,9 +37,8 @@ jobs:
               uses: dtolnay/rust-toolchain@stable
               id: toolchain
               with:
-                  cache: true
                   components: ""
-                  toolchain: nightly
+                  toolchain: ${{ inputs.toolchain }}
 
             - name: Install cargo extensions binaries
               # https://github.com/taiki-e/install-action

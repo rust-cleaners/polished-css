@@ -71,3 +71,8 @@ jobs:
         uses: ./.github/workflows/nextest.yml
         with:
             toolchain: ${{ matrix.toolchain }}
+
+    tarpaulin:
+        name: Test
+        needs: [nextest]
+        uses: ./.github/workflows/tarpaulin.yml

@@ -29,6 +29,8 @@ env:
     CARGO_TERM_COLOR: always
 
 permissions:
+    checks: write
+    issues: write
     pull-requests: write
 
 jobs:
@@ -69,12 +71,5 @@ jobs:
             matrix:
                 toolchain: [stable, nightly]
         uses: ./.github/workflows/nextest.yml
-        with:
-            toolchain: ${{ matrix.toolchain }}
-
-    audit:
-        name: Security
-        needs: [check]
-        uses: ./.github/workflows/audit.yml
         with:
             toolchain: ${{ matrix.toolchain }}

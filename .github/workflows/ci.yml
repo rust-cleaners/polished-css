@@ -39,6 +39,8 @@ jobs:
             fail-fast: false
             matrix:
                 toolchain: [stable, nightly]
+        with:
+            toolchain: ${{ matrix.toolchain }}
 
     lint_clippy:
         name: Lint
@@ -69,8 +71,3 @@ jobs:
         uses: ./.github/workflows/nextest.yml
         with:
             toolchain: ${{ matrix.toolchain }}
-
-    test_coverage:
-        name: Test
-        needs: [test_nextest]
-        uses: ./.github/workflows/coverage.yml

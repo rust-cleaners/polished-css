@@ -23,3 +23,32 @@ version = "0.1.0"
 [workspace.dependencies]
 strum = { version = "0.25.0", default-features = false }
 strum_macros = { version = "0.25.3", default-features = false }
+
+[workspace.lints.clippy]
+# Deny
+all = "deny"
+cargo = "deny"
+complexity = "deny"
+correctness = "deny"
+nursery = "deny"
+pedantic = "deny"
+perf = "deny"
+suspicious = "deny"
+cast_possible_truncation = "deny"
+cast_precision_loss = "deny"
+unwrap_used = "deny"
+# Allow
+derive_partial_eq_without_eq = "allow"
+module_name_repetitions = "allow"
+
+[workspace.lints.rust]
+missing_debug_implementations = "deny"
+rust_2018_idioms = "deny"
+unused_must_use = "deny"
+unused_lifetimes = "deny"
+unused_results = "deny"
+# Warn
+unused_tuple_struct_fields = "warn"
+unused_crate_dependencies = "warn"
+# Allow
+ambiguous_glob_reexports = "allow"

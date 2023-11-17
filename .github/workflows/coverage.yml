@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+---
+name: Coverage
+
+on:
+    workflow_call:
+    workflow_dispatch:
+
+defaults:
+    run:
+        shell: bash
+
+env:
+    CI: true
+    CARGO_TERM_COLOR: always
+
+jobs:
+    coverage:
+        name: coverage
+        outputs:
+            status: ${{ steps.failure.outputs.status || steps.success.outputs.status }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 3
+        steps:
+            - name: Checkout to the repository
+              # https://github.com/actions/checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              # https://github.com/moonrepo/setup-rust
+              uses: moonrepo/setup-rust@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  bins: cargo-tarpaulin
+                  cache: true
+                  channel: nightly
+                  profile: minimal
+
+            - name: Run tarpaulin to generate tests coverage results and upload them to Coveralls.io
+              run: >
+                  cargo
+                  tarpaulin
+                  --all-features
+                  --coveralls ${{ secrets.COVERALLS_TOKEN }}
+                  --no-fail-fast
+                  --skip-clean
+                  --workspace

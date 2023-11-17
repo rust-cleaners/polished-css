@@ -32,7 +32,7 @@ permissions:
     pull-requests: write
 
 jobs:
-    hack_check:
+    check:
         name: Check
         uses: ./.github/workflows/hack.yml
         strategy:
@@ -42,10 +42,10 @@ jobs:
         with:
             toolchain: ${{ matrix.toolchain }}
 
-    lint_clippy:
+    clippy:
         name: Lint
         uses: ./.github/workflows/clippy.yml
-        needs: [hack_check]
+        needs: [check]
         strategy:
             fail-fast: false
             matrix:
@@ -53,17 +53,17 @@ jobs:
         with:
             toolchain: ${{ matrix.toolchain }}
 
-    lint_rustfmt:
+    rustfmt:
         name: Lint
         uses: ./.github/workflows/rustfmt.yml
 
-    lint_typos:
+    typos:
         name: Lint
         uses: ./.github/workflows/typos.yml
 
-    test_nextest:
+    nextest:
         name: Test
-        needs: [hack_check]
+        needs: [check]
         strategy:
             fail-fast: false
             matrix:

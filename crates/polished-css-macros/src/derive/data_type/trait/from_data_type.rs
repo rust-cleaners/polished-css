@@ -56,7 +56,8 @@ fn impl_dependent_data_types(
 
 			stream.extend(quote! {
 				impl From<crate::data_type::#data_type_ident> for #enum_ident {
-					fn from(value: crate::data_type::#data_type_ident) -> Self {
+					fn from(value: crate::data_type::#data_type_ident) -> Self
+					{
 						Self::#enum_variant_ident(value.into())
 					}
 				}
@@ -85,10 +86,13 @@ fn impl_dependent_color_functions(
 		.map(|color_function| {
 			let color_function_ident = color_function.get_ident();
 			let color_function_trait_ident = color_function.get_trait_ident();
+			let (impl_generics, type_generics, where_clause) = color_function.get_generics();
 
 			quote! {
-				impl From<crate::data_type::#color_function_ident> for #enum_ident {
-					fn from(value: crate::data_type::#color_function_ident) -> Self {
+				impl From<crate::data_type::#color_function_ident #type_generics> for #enum_ident {
+					fn from #impl_generics (value: crate::data_type::#color_function_ident #type_generics) -> Self
+						where_clause
+					{
 						Self::#enum_variant_ident(value.into())
 					}
 				}

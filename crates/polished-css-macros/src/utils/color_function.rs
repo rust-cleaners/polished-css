@@ -1,4 +1,5 @@
-use syn::{spanned::Spanned, Ident};
+use quote::quote;
+use syn::{spanned::Spanned, Ident, ImplGenerics, TypeGenerics, WhereClause};
 
 use super::DATA_TYPE_TRAIT_SUFFIX;
 
@@ -22,5 +23,23 @@ impl ColorFunction {
 	pub fn get_trait_ident(&self) -> Ident {
 		let name = format!("{self}{DATA_TYPE_TRAIT_SUFFIX}");
 		Ident::new(&name, Spanned::span(&name))
+	}
+
+	pub fn get_generics<'a>(&self) -> (ImplGenerics<'a>, TypeGenerics<'a>, WhereClause) {
+		match self {
+			ColorFunction::Oklch => {
+				// FIXME: See if anything I can do there - convert TokenStream to generics
+				let impl_generics = ImplGenerics::from(quote!(<L,C,H,A>));
+				let type_generics = TypeGenerics::from(quote!(<L,C,H,A>));
+				let where_clause = WhereClause::from(quote! {
+					where
+						L: Clone + std::fmt::Debug + std::fmt::Display + PartialEq + crate::utils::UnitDataType<Self>,
+						C: Clone + std::fmt::Debug + std::fmt::Display + PartialEq + crate::utils::UnitDataType<Self>,
+						H: Clone + std::fmt::Debug + std::fmt::Display + PartialEq + crate::utils::UnitDataType<Self>,
+						A: Clone + std::fmt::Debug + std::fmt::Display + PartialEq + crate::utils::UnitDataType<Self>,
+				});
+				(impl_generics, type_generics, where_clause)
+			}
+		}
 	}
 }

@@ -8,10 +8,10 @@ use crate::{
 #[derive(Clone, Debug, PartialEq)]
 pub struct Oklch<L, C, H, A>
 where
-	L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Lightness>,
-	C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Chroma>,
-	H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Hue>,
-	A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Alpha>,
+	L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
 {
 	pub lightness: L,
 	pub chroma: C,
@@ -21,10 +21,10 @@ where
 
 impl<L, C, H, A> fmt::Display for Oklch<L, C, H, A>
 where
-	L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Lightness>,
-	C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Chroma>,
-	H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Hue>,
-	A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Alpha>,
+	L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
 {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		write!(
@@ -75,15 +75,15 @@ where
 	}
 }
 
-pub trait OklchStorage: From<Oklch<Lightness, Chroma, Hue, Alpha>> {
+pub trait OklchStorage: From<Oklch<Lightness, Hue, Chroma, Alpha>> {
 	#[must_use]
 	fn oklch<L, C, H, A>(value: Oklch<L, C, H, A>) -> Self
 	where
 		Self: Sized,
-		L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Lightness>,
-		C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Chroma>,
-		H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Hue>,
-		A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Alpha>,
+		L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+		C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+		H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+		A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
 	{
 		Self::from(value)
 	}

@@ -10,6 +10,13 @@ pub mod oklch;
 
 pub use oklch::*;
 
+use std::fmt;
+
+use crate::{
+	data_type::{Alpha, Chroma, Hue, Lightness},
+	utils::UnitDataType,
+};
+
 /// [CSSWG specification](https://drafts.csswg.org/css-color/#typedef-absolute-color-function)
 #[derive(
 	Clone,
@@ -26,27 +33,32 @@ pub enum AbsoluteColorFunction {
 	// /// `rgb()` and its `rgba()` alias - which (like the hex color notation)
 	// /// specify sRGB colors directly by their red/green/blue/alpha channels.
 	// Rgb,
+
 	// /// `hsl()` and its `hsla()` alias - specifies sRGB colors by hue,
 	// /// saturation, and lightness using the HSL cylindrical coordinate
 	// /// model.
+
 	// Hsl,
 	// /// `hwb()` - specifies an sRGB color by hue, whiteness, and blackness
 	// /// using the HWB cylindrical coordinate model.
 	// Hwb,
+
 	// /// `lab()` - specifies a CIELAB color by CIE Lightness and its a- and
 	// /// b-axis hue coordinates (red/green-ness, and yellow/blue-ness) using
 	// /// the CIE LAB rectangular coordinate model.
 	// Lab,
+
 	// /// `lch()` - specifies a CIELAB color by CIE Lightness, Chroma, and
 	// /// hue using the CIE LCH cylindrical coordinate model
 	// Lch,
+
 	// /// `oklab()` - specifies an Oklab color by Oklab Lightness and its a-
 	// /// and b-axis hue coordinates (red/green-ness, and yellow/blue-ness) using
 	// /// the Oklab rectangular coordinate model.
 	// Oklab,
 	/// `oklch()` - specifies an Oklab color by Oklab Lightness, Chroma, and Hue
 	/// using the Oklch cylindrical coordinate model.
-	Oklch(Oklch),
+	Oklch(Oklch<Lightness, Chroma, Hue, Alpha>),
 	// /// ``color()` - allows specifying colors in a variety of color spaces
 	// /// including sRGB, Linear-light sRGB, Display P3, A98 RGB, ProPhoto RGB,
 	// /// ITU-R BT.2020-2, and CIE XYZ.
@@ -67,8 +79,14 @@ pub trait AbsoluteColorFunctionStorage: From<AbsoluteColorFunction> + OklchStora
 	// }
 }
 
-impl From<Oklch> for AbsoluteColorFunction {
-	fn from(value: Oklch) -> Self {
+impl From<Oklch<Lightness, Chroma, Hue, Alpha>> for AbsoluteColorFunction {
+	fn from<L, C, H, A>(value: Oklch<L, C, H, A>) -> Self
+	where
+		L: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+		C: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+		H: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+		A: Clone + fmt::Debug + fmt::Display + PartialEq + UnitDataType<Self>,
+	{
 		Self::Oklch(value)
 	}
 }

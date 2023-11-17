@@ -84,19 +84,20 @@ fn impl_dependent_color_functions(
 		.get_dependant_color_functions()
 		.iter()
 		.map(|color_function| {
-			let color_function_ident = color_function.get_ident();
-			let color_function_trait_ident = color_function.get_trait_ident();
-			let (impl_generics, type_generics, where_clause) = color_function.get_generics();
+			let struct_ident = color_function.struct_ident();
+			let trait_ident = color_function.trait_ident();
+			let generics = color_function.generics();
+			let (impl_generics, type_generics, where_clause) = generics.split_for_impl();
 
 			quote! {
-				impl From<crate::data_type::#color_function_ident #type_generics> for #enum_ident {
-					fn from #impl_generics (value: crate::data_type::#color_function_ident #type_generics) -> Self
-						where_clause
+				impl From<crate::data_type::#struct_ident #type_generics> for #enum_ident {
+					fn from #impl_generics (value: crate::data_type::#struct_ident #type_generics) -> Self
+						#where_clause
 					{
 						Self::#enum_variant_ident(value.into())
 					}
 				}
-				impl crate::data_type::#color_function_trait_ident for #enum_ident {}
+				impl crate::data_type::#trait_ident for #enum_ident {}
 			}
 		})
 		.collect()

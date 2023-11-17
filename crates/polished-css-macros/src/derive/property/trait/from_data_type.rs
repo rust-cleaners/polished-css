@@ -121,7 +121,7 @@ fn get_color_functions_dependencies(ast: &DeriveInput, data_type: &DataType) -> 
 		.get_dependant_color_functions()
 		.iter()
 		.map(|color_function| {
-			let trait_ident = color_function.get_trait_ident();
+			let trait_ident = color_function.trait_ident();
 			quote!(impl crate::data_type::#trait_ident for #struct_ident<#enum_value_ident> {})
 		})
 		.collect()

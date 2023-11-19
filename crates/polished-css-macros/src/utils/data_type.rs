@@ -53,6 +53,9 @@ pub enum DataType {
 	SystemColor,
 	Time,
 	ViewportLength,
+	Blue,
+	Green,
+	Red,
 }
 
 impl DataType {
@@ -99,6 +102,7 @@ impl DataType {
 			Self::Alpha | Self::Chroma | Self::Lightness | Self::NumberPercentage => {
 				&[Self::Number, Self::Percentage]
 			}
+			Self::Blue | Self::Green | Self::Red => &[Self::Number, Self::Percentage],
 			Self::Color => &[Self::AbsoluteColor, Self::SystemColor],
 			Self::Dimension => &[Self::Frequency, Self::Length, Self::Resolution, Self::Time],
 			Self::FrequencyPercentage => &[Self::Frequency, Self::Percentage],
@@ -118,7 +122,7 @@ impl DataType {
 
 	pub const fn get_dependant_color_functions(&self) -> &[ColorFunction] {
 		match self {
-			Self::AbsoluteColorFunction => &[ColorFunction::Oklch],
+			Self::AbsoluteColorFunction => &[ColorFunction::Oklch, ColorFunction::Rgb],
 			_ => &[],
 		}
 	}

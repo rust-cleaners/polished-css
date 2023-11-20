@@ -1,12 +1,25 @@
+//! Related to the [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color model.
+
 use std::fmt;
 
 use crate::data_type::{Alpha, Blue, Green, Red};
 
+/// `rgb()` and its `rgba()` alias - which _(like the hex color notation)_
+/// specify sRGB colors directly by their red/green/blue/alpha channels.
+///
+/// ### Resources
+///
+/// - [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/rgb)
+/// - [CSSWG specification](https://www.w3.org/TR/css-color-3/#rgb-color)
 #[derive(Clone, Debug, PartialEq)]
 pub struct Rgb {
+	/// Red channel
 	pub red: Red,
+	/// Green channel
 	pub green: Green,
+	/// Blue channel
 	pub blue: Blue,
+	/// Optional alpha channel - by default is `1`
 	pub alpha: Option<Alpha>,
 }
 
@@ -60,6 +73,7 @@ where
 	}
 }
 
+/// Use absolute color function `[Rgb]` to store the CSS value.
 pub trait RgbStorage: From<Rgb> {
 	#[must_use]
 	fn rgb(value: Rgb) -> Self

@@ -27,6 +27,7 @@ pub mod percentage;
 pub mod ratio;
 pub mod red;
 pub mod resolution;
+pub mod saturation;
 pub mod string;
 pub mod time;
 
@@ -52,5 +53,6 @@ pub use percentage::*;
 pub use ratio::*;
 pub use red::*;
 pub use resolution::*;
+pub use saturation::*;
 pub use string::*;
 pub use time::*;

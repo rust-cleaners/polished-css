@@ -6,9 +6,11 @@
 //! - [CSSWG specification](https://www.w3.org/TR/css-color-4/#color-functions)
 //! - [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value)
 
+pub mod hsl;
 pub mod oklch;
 pub mod rgb;
 
+pub use hsl::*;
 pub use oklch::*;
 pub use rgb::*;
 
@@ -25,14 +27,15 @@ pub use rgb::*;
 // TODO: Implement missing color functions - feel free to contribute.
 #[non_exhaustive]
 pub enum AbsoluteColorFunction {
+	/// `hsl()` and its `hsla()` alias - specifies sRGB colors by hue,
+	/// saturation, and lightness using the HSL cylindrical coordinate
+	/// model.
+	Hsl(Hsl),
+
 	/// `rgb()` and its `rgba()` alias - which _(like the hex color notation)_
 	/// specify sRGB colors directly by their red/green/blue/alpha channels.
 	Rgb(Rgb),
 
-	// /// `hsl()` and its `hsla()` alias - specifies sRGB colors by hue,
-	// /// saturation, and lightness using the HSL cylindrical coordinate
-	// /// model.
-	// Hsl,
 	// /// `hwb()` - specifies an sRGB color by hue, whiteness, and blackness
 	// /// using the HWB cylindrical coordinate model.
 	// Hwb,
@@ -64,10 +67,14 @@ pub enum AbsoluteColorFunction {
 //     }
 // }
 
-pub trait AbsoluteColorFunctionStorage:
-	From<AbsoluteColorFunction> + OklchStorage + RgbStorage
-{
+pub trait AbsoluteColorFunctionStorage: From<AbsoluteColorFunction> {}
+
+impl From<Hsl> for AbsoluteColorFunction {
+	fn from(value: Hsl) -> Self {
+		Self::Hsl(value)
+	}
 }
+impl HslStorage for AbsoluteColorFunction {}
 
 impl From<Oklch> for AbsoluteColorFunction {
 	fn from(value: Oklch) -> Self {
@@ -84,6 +91,21 @@ impl From<Rgb> for AbsoluteColorFunction {
 impl RgbStorage for AbsoluteColorFunction {}
 
 mod test {
+	#[test]
+	fn display_hsl() {
+		use crate::prelude::*;
+		assert_eq!(
+			super::AbsoluteColorFunction::hsl(Hsl {
+				hue: Hue::deg(75.0),
+				saturation: Saturation::number(1.0),
+				lightness: Lightness::number(0.5),
+				alpha: Some(Alpha::invisible())
+			})
+			.to_string(),
+			String::from("hsl(75deg 1 0.5 / 0)")
+		);
+	}
+
 	#[test]
 	fn display_oklch() {
 		use crate::prelude::*;

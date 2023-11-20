@@ -6,12 +6,12 @@ edition = { workspace = true }
 publish = { workspace = true }
 version = { workspace = true }
 name = "polished-css-macros"
-description = "Procedural macros which support the development of a library crate `polished-css`."
+description = "Procedural macros which supports the development of a library crate `polished-css`."
 categories = ["graphics", "gui", "rendering", "wasm", "web-programming"]
 keywords = ["macros"]
 authors = [
-  "Mateusz Kadlubowski <xeho91@pm.me>",
-  "Vincent Chapuis <vincent.professional@chapuis.ovh>",
+	"Mateusz Kadlubowski <xeho91@pm.me>",
+	"Vincent Chapuis <vincent.professional@chapuis.ovh>",
 ]
 documentation = { workspace = true }
 homepage = { workspace = true }
@@ -30,3 +30,6 @@ syn = { version = "2.0.39" }
 
 [lib]
 proc-macro = true
+
+[lints]
+workspace = true

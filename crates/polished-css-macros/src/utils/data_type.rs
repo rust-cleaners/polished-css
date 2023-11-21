@@ -26,6 +26,8 @@ pub enum DataType {
 	AbsoluteLength,
 	Alpha,
 	Angle,
+	Blackness,
+	Blue,
 	Chroma,
 	Color,
 	ContainerLength,
@@ -36,6 +38,7 @@ pub enum DataType {
 	FontLength,
 	Frequency,
 	FrequencyPercentage,
+	Green,
 	HexColor,
 	Hue,
 	Integer,
@@ -47,6 +50,7 @@ pub enum DataType {
 	NumberPercentage,
 	Percentage,
 	Ratio,
+	Red,
 	RelativeLength,
 	Resolution,
 	Saturation,
@@ -54,9 +58,7 @@ pub enum DataType {
 	SystemColor,
 	Time,
 	ViewportLength,
-	Blue,
-	Green,
-	Red,
+	Whiteness,
 }
 
 impl DataType {
@@ -101,13 +103,15 @@ impl DataType {
 				]
 			}
 			Self::Alpha
+			| Self::Blackness
 			| Self::Chroma
 			| Self::Lightness
 			| Self::NumberPercentage
 			| Self::Blue
 			| Self::Green
 			| Self::Red
-			| Self::Saturation => &[Self::Number, Self::Percentage],
+			| Self::Saturation
+			| Self::Whiteness => &[Self::Number, Self::Percentage],
 			Self::Color => &[Self::AbsoluteColor, Self::SystemColor],
 			Self::Dimension => &[Self::Frequency, Self::Length, Self::Resolution, Self::Time],
 			Self::FrequencyPercentage => &[Self::Frequency, Self::Percentage],

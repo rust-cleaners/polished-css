@@ -7,10 +7,12 @@
 //! - [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value)
 
 pub mod hsl;
+pub mod hwb;
 pub mod oklch;
 pub mod rgb;
 
 pub use hsl::*;
+pub use hwb::*;
 pub use oklch::*;
 pub use rgb::*;
 
@@ -32,13 +34,14 @@ pub enum AbsoluteColorFunction {
 	/// model.
 	Hsl(Hsl),
 
+	/// `hwb()` - specifies an sRGB color by hue, whiteness, and blackness
+	/// using the HWB cylindrical coordinate model.
+	Hwb(Hwb),
+
 	/// `rgb()` and its `rgba()` alias - which _(like the hex color notation)_
 	/// specify sRGB colors directly by their red/green/blue/alpha channels.
 	Rgb(Rgb),
 
-	// /// `hwb()` - specifies an sRGB color by hue, whiteness, and blackness
-	// /// using the HWB cylindrical coordinate model.
-	// Hwb,
 	// /// `lab()` - specifies a CIELAB color by CIE Lightness and its a- and
 	// /// b-axis hue coordinates (red/green-ness, and yellow/blue-ness) using
 	// /// the CIE LAB rectangular coordinate model.
@@ -58,14 +61,6 @@ pub enum AbsoluteColorFunction {
 	// /// ITU-R BT.2020-2, and CIE XYZ.
 	// Color,
 }
-
-// #[polished_css_macros::create_trait(constructor_arg_type =
-// AbsoluteColorFunction, from_enum = true)] impl AbsoluteColorFunction {
-//     #[must_use]
-//     pub fn oklch(value: Oklch) -> Self {
-//         Self::Oklch(value)
-//     }
-// }
 
 pub trait AbsoluteColorFunctionStorage: From<AbsoluteColorFunction> {}
 
@@ -103,6 +98,21 @@ mod test {
 			})
 			.to_string(),
 			String::from("hsl(75deg 1 0.5 / 0)")
+		);
+	}
+
+	#[test]
+	fn display_hwb() {
+		use crate::prelude::*;
+		assert_eq!(
+			super::AbsoluteColorFunction::Hwb(Hwb {
+				hue: Hue::turn(2.0),
+				whiteness: Whiteness::percentage(85.0),
+				blackness: Blackness::number(0.75),
+				alpha: Some(Alpha::visible())
+			})
+			.to_string(),
+			String::from("hwb(2turn 85% 0.75 / 1)")
 		);
 	}
 

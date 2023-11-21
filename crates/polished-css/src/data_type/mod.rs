@@ -7,6 +7,7 @@
 
 pub mod alpha;
 pub mod angle;
+pub mod blackness;
 pub mod blue;
 pub mod chroma;
 pub mod color;
@@ -30,9 +31,11 @@ pub mod resolution;
 pub mod saturation;
 pub mod string;
 pub mod time;
+pub mod whiteness;
 
 pub use alpha::*;
 pub use angle::*;
+pub use blackness::*;
 pub use blue::*;
 pub use chroma::*;
 pub use color::*;
@@ -56,3 +59,4 @@ pub use resolution::*;
 pub use saturation::*;
 pub use string::*;
 pub use time::*;
+pub use whiteness::*;

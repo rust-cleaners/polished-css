@@ -48,11 +48,11 @@ where
 	A: Into<Option<Alpha>>,
 {
 	fn from(value: (H, S, L, A)) -> Self {
-		let (r, g, b, a) = value;
+		let (h, s, l, a) = value;
 		Self {
-			hue: r.into(),
-			saturation: g.into(),
-			lightness: b.into(),
+			hue: h.into(),
+			saturation: s.into(),
+			lightness: l.into(),
 			alpha: a.into(),
 		}
 	}
@@ -65,11 +65,11 @@ where
 	L: Into<Lightness>,
 {
 	fn from(value: (H, S, L)) -> Self {
-		let (r, g, b) = value;
+		let (h, s, l) = value;
 		Self {
-			hue: r.into(),
-			saturation: g.into(),
-			lightness: b.into(),
+			hue: h.into(),
+			saturation: s.into(),
+			lightness: l.into(),
 			alpha: Some(Alpha::default()),
 		}
 	}

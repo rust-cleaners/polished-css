@@ -1,5 +1,11 @@
+//! Hue angle of the color.
+
 use super::{Angle, Number, NumberStorage};
 
+/// Dominant wavelength (angle) of a color
+///
+/// ### Resources
+///
 /// [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/hue)
 #[derive(
 	Clone,

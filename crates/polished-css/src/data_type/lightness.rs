@@ -1,5 +1,10 @@
+//! Lightness of the color.
+
 use crate::data_type::{Number, NumberStorage, Percentage};
 
+/// Ranging from `0%` _(black, no light)_ to `100%` _(white, full light)_.
+/// A value of `50%` represents the mid-point, indicating the color as neither
+/// particularly dark nor particularly light.
 #[derive(
 	Clone,
 	Debug,
@@ -14,6 +19,9 @@ pub enum Lightness {
 	Number(Number),
 	// TODO: Add bounds from 0% to 100%!
 	Percentage(Percentage),
+	/// In certain cases, a color can have one or more **missing color
+	/// components**.
+	/// [See more in the CSSWG specification](https://drafts.csswg.org/css-color/#missing)
 	None,
 }
 

@@ -26,6 +26,8 @@ pub enum DataType {
 	AbsoluteLength,
 	Alpha,
 	Angle,
+	Blackness,
+	Blue,
 	Chroma,
 	Color,
 	ContainerLength,
@@ -36,6 +38,7 @@ pub enum DataType {
 	FontLength,
 	Frequency,
 	FrequencyPercentage,
+	Green,
 	HexColor,
 	Hue,
 	Integer,
@@ -47,12 +50,15 @@ pub enum DataType {
 	NumberPercentage,
 	Percentage,
 	Ratio,
+	Red,
 	RelativeLength,
 	Resolution,
+	Saturation,
 	String,
 	SystemColor,
 	Time,
 	ViewportLength,
+	Whiteness,
 }
 
 impl DataType {
@@ -96,9 +102,16 @@ impl DataType {
 					Self::NamedColor,
 				]
 			}
-			Self::Alpha | Self::Chroma | Self::Lightness | Self::NumberPercentage => {
-				&[Self::Number, Self::Percentage]
-			}
+			Self::Alpha
+			| Self::Blackness
+			| Self::Chroma
+			| Self::Lightness
+			| Self::NumberPercentage
+			| Self::Blue
+			| Self::Green
+			| Self::Red
+			| Self::Saturation
+			| Self::Whiteness => &[Self::Number, Self::Percentage],
 			Self::Color => &[Self::AbsoluteColor, Self::SystemColor],
 			Self::Dimension => &[Self::Frequency, Self::Length, Self::Resolution, Self::Time],
 			Self::FrequencyPercentage => &[Self::Frequency, Self::Percentage],
@@ -118,7 +131,9 @@ impl DataType {
 
 	pub const fn get_dependant_color_functions(&self) -> &[ColorFunction] {
 		match self {
-			Self::AbsoluteColorFunction => &[ColorFunction::Oklch],
+			Self::AbsoluteColorFunction => {
+				&[ColorFunction::Hsl, ColorFunction::Oklch, ColorFunction::Rgb]
+			}
 			_ => &[],
 		}
 	}

@@ -1,6 +1,15 @@
+//! Blue channel from the [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color model.
+
 use crate::data_type::{Number, NumberStorage, Percentage};
 
-/// [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/alpha_value)
+/// Green channel from the [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color model.
+/// It can be a float `f64` number between `0` and `255`,
+/// or a percentage is respective to those min and max values.
+///
+/// ### Resources
+///
+/// - [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/rgb)
+/// - [CSSWG specification](https://www.w3.org/TR/css-color-3/#rgb-color)
 #[derive(
 	Clone,
 	Debug,
@@ -26,11 +35,13 @@ impl From<f64> for Green {
 
 #[polished_css_macros::create_trait_from_enum_impl()]
 impl Green {
+	/// Use minimum value from the channel - `0`.
 	#[must_use]
 	pub const fn min() -> Self {
 		Self::Number(Number(0.0))
 	}
 
+	/// Use maximum value from the channel - `255`.
 	#[must_use]
 	pub const fn max() -> Self {
 		Self::Number(Number(255.0))

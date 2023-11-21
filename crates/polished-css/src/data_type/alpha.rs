@@ -1,5 +1,11 @@
+//! Alpha channel or transparency of a color.
+
 use crate::data_type::{Number, NumberStorage, Percentage};
 
+/// Alpha channel or transparency of a color.
+///
+/// ### Resources
+///
 /// [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/alpha_value)
 #[derive(
 	Clone,

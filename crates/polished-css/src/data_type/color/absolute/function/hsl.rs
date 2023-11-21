@@ -1,12 +1,27 @@
+//! [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color model.
+
 use std::fmt;
 
 use crate::data_type::{Alpha, Hue, Lightness, Saturation};
 
+/// `hsl()` and its `hsla()` alias - specifies sRGB colors by hue,
+/// saturation, and lightness using the HSL cylindrical coordinate
+/// model.
+///
+/// ### Resources
+///
+/// - [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/hsl)
+/// - [CSSWG specification](https://www.w3.org/TR/css-color-3/#hsl-color)
 #[derive(Clone, Debug, PartialEq)]
 pub struct Hsl {
+	/// Dominant wavelength of a color
 	pub hue: Hue,
+	/// Determines how much of the pure hue is present in the color
 	pub saturation: Saturation,
+	/// Overall brightness of the color without affecting its hue (type of
+	/// color) or saturation (color intensity)
 	pub lightness: Lightness,
+	/// Optional alpha channel - by default is `1`
 	pub alpha: Option<Alpha>,
 }
 

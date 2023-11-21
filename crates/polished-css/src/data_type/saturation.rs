@@ -1,6 +1,11 @@
+//! Saturation of the color.
+
 use crate::data_type::{Number, NumberStorage, Percentage};
 
-/// [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/alpha_value)
+/// Intensity or purity of a color. It determines how much of the pure hue is
+/// present in the color.
+/// A color with high saturation appears vivid and vibrant, while a color with
+/// low saturation tends to look more muted or washed out.
 #[derive(
 	Clone,
 	Debug,
@@ -16,6 +21,10 @@ pub enum Saturation {
 	Number(Number),
 	// NOTE: We need to override to add bounds
 	Percentage(Percentage),
+	/// In certain cases, a color can have one or more **missing color
+	/// components**.
+	/// [See more in the CSSWG specification](https://drafts.csswg.org/css-color/#missing)
+	None,
 }
 
 impl From<f64> for Saturation {

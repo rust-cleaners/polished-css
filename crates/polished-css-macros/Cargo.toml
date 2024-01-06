@@ -22,11 +22,11 @@ readme = { workspace = true }
 [dependencies]
 convert_case = { version = "0.6.0" }
 darling = { version = "0.20.3" }
-proc-macro2 = { version = "1.0.69" }
-quote = { version = "1.0.33" }
+proc-macro2 = { version = "1.0.76" }
+quote = { version = "1.0.35" }
 strum = { workspace = true }
 strum_macros = { workspace = true }
-syn = { version = "2.0.39" }
+syn = { version = "2.0.48" }
 
 [lib]
 proc-macro = true

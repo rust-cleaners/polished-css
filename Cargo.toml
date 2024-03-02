@@ -52,3 +52,6 @@ unused_tuple_struct_fields = "warn"
 unused_crate_dependencies = "warn"
 # Allow
 ambiguous_glob_reexports = "allow"
+
+[patch.crates-io]
+yewdux = { git = "https://github.com/intendednull/yewdux.git", tag = "v0.9.4" }

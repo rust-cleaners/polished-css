@@ -21,3 +21,6 @@ strum_macros = { version = "0.25.2" }
 yew = { version = "0.21.0", features = ["csr"] }
 yewdux = { version = "0.9.4" }
 wasm-logger = { version = "0.2.0" }
+
+[patch.crates-io]
+yewdux = { git = "https://github.com/intendednull/yewdux.git", tag = "v0.9.4" }

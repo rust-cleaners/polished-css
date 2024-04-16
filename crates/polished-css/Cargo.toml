@@ -30,7 +30,7 @@ once_cell = { version = "1.18.0", optional = true }
 paste = { version = "1.0.14" }
 regex = { version = "1.10.2", default-features = false }
 strum_macros = { workspace = true }
-typed-builder = { version = "0.18.0" }
+typed-builder = { version = "0.18.2" }
 yew = { version = "0.21.0", optional = true }
 
 [lints]

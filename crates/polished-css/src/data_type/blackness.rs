@@ -1,10 +1,9 @@
-//! Lightness of the color.
+//! Blackness of the color.
 
 use crate::data_type::{Number, NumberStorage, Percentage};
 
-/// Ranging from `0%` _(black, no light)_ to `100%` _(white, full light)_.
-/// A value of `50%` represents the mid-point, indicating the color as neither
-/// particularly dark nor particularly light.
+/// Specifies the amount of black to mix in, from `0%` _(no blackness)_ to
+/// `100%` _(full blackness)_.
 #[derive(
 	Clone,
 	Debug,
@@ -14,7 +13,7 @@ use crate::data_type::{Number, NumberStorage, Percentage};
 	polished_css_macros::DataTypeFromDataTypes,
 )]
 #[display(on_enum = true)]
-pub enum Lightness {
+pub enum Blackness {
 	// TODO: Add bounds from 0.0 to 1!
 	Number(Number),
 	// TODO: Add bounds from 0% to 100%!
@@ -25,14 +24,14 @@ pub enum Lightness {
 	None,
 }
 
-impl From<f64> for Lightness {
+impl From<f64> for Blackness {
 	fn from(value: f64) -> Self {
 		Self::number(value)
 	}
 }
 
 #[polished_css_macros::create_trait_from_enum_impl()]
-impl Lightness {
+impl Blackness {
 	// TODO: Add conversion methods?
 }
 
@@ -42,13 +41,13 @@ mod test {
 	fn display() {
 		use crate::data_type::*;
 		assert_eq!(
-			super::Lightness::percentage(1.23).to_string(),
+			super::Blackness::percentage(1.23).to_string(),
 			String::from("1.23%")
 		);
 		assert_eq!(
-			super::Lightness::number(13.37).to_string(),
+			super::Blackness::number(13.37).to_string(),
 			String::from("13.37")
 		);
-		assert_eq!(super::Lightness::None.to_string(), String::from("none"));
+		assert_eq!(super::Blackness::None.to_string(), String::from("none"));
 	}
 }

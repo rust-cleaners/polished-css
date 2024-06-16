@@ -10,7 +10,9 @@ use super::DATA_TYPE_TRAIT_SUFFIX;
 )]
 #[strum(serialize_all = "PascalCase")]
 pub enum ColorFunction {
+	Hsl,
 	Oklch,
+	Rgb,
 }
 
 impl ColorFunction {

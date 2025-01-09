@@ -20,13 +20,13 @@ repository = { workspace = true }
 readme = { workspace = true }
 
 [features]
-atomic = ["dep:once_cell"]
+atomic = []
 yew = ["atomic", "dep:yew"]
 
 [dependencies]
 polished-css-macros = { path = "../polished-css-macros", version = "0.1.0" }
 
-once_cell = { version = "1.18.0", optional = true }
+once_cell = { version = "1.18.0" }
 paste = { version = "1.0.14" }
 regex = { version = "1.10.2", default-features = false }
 strum_macros = { workspace = true }

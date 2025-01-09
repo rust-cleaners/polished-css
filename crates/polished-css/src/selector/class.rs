@@ -1,3 +1,4 @@
+use once_cell::sync::OnceCell;
 use regex::{Captures, Regex};
 
 use super::SelectorDisplay;
@@ -31,22 +32,21 @@ impl From<&str> for Class {
     }
 }
 
+static SPECIAL_CHAR_REGEX: OnceCell<Regex> = OnceCell::new();
+
 /// # Panics
 ///
-/// Pacnis when the Regex couldn't be created
+/// Panic when the Regex couldn't be created
 #[must_use]
 pub fn escape_special_chars_in_class_name(value: &str) -> String {
-    Regex::new(r#"[!@#$%^&*()+\=\[\]{};':"\\|,.<>\\/?]"#)
-        .expect("Failed to create a regex for matching special characters in CSS class name.")
-        .replace_all(value, |caps: &Captures| {
+    let regex = SPECIAL_CHAR_REGEX.get_or_init(|| {
+        Regex::new(r#"[!@#$%^&*()+\=\[\]{};':"\\|,.<>\\/?]"#)
+            .expect("Failed to create a regex for matching special characters in CSS class name.")
+    });
+    regex
+        .replace_all(value, |caps: &Captures<'_>| {
             caps.iter()
-                .map(|char| {
-                    if let Some(char) = char {
-                        format!("\\{}", char.as_str())
-                    } else {
-                        String::new()
-                    }
-                })
+                .map(|char| char.map_or_else(String::new, |char| format!("\\{}", char.as_str())))
                 .collect::<String>()
         })
         .to_string()

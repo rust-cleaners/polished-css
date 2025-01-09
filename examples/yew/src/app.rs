@@ -1,4 +1,4 @@
-use styles::prelude::*;
+use polished_css::prelude::*;
 use yew::prelude::*;
 
 use super::{Layer, StylesManager};

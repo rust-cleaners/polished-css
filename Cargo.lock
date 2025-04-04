@@ -929,9 +929,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.10.2"
+version = "1.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "380b951a9c5e80ddfd6136919eef32310721aa4aacd4889a8d39124b026ab343"
+checksum = "b91213439dad192326a0d7c6ee3955910425f441d7038e0d6933b0aec5c4517f"
 dependencies = [
  "regex-automata",
  "regex-syntax",
@@ -939,9 +939,9 @@ dependencies = [
 
 [[package]]
 name = "regex-automata"
-version = "0.4.3"
+version = "0.4.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5f804c7828047e88b2d32e2d7fe5a105da8ee3264f01902f796c8e067dc2483f"
+checksum = "38caf58cc5ef2fed281f89292ef23f6365465ed9a41b7a7754eb4e26496c92df"
 dependencies = [
  "regex-syntax",
 ]
@@ -1362,8 +1362,7 @@ dependencies = [
 [[package]]
 name = "yewdux"
 version = "0.9.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2ebc94bf7668ffd7470f27a9b323ef73d4dc3fdbe920477645f3adc104bc53f2"
+source = "git+https://github.com/intendednull/yewdux.git?tag=v0.9.4#58f58a8cac4d2cf958f3e90f324557ae8dc52651"
 dependencies = [
  "anymap",
  "async-trait",

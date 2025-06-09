@@ -21,6 +21,16 @@ crate::create_property!(
 );
 
 crate::create_property!(
+    LetterSpacing,
+    display = "",
+    atomic = "tracking",
+    custom = false,
+    data_type = "<length-percentage>",
+    initial_value = Normal,
+    keywords = "normal",
+);
+
+crate::create_property!(
     Quotes,
     display = "",
     atomic = "quotes",
